@@ -29,7 +29,7 @@ Tick these against the **deployed** site, not localhost.
 
 ## Verified in this build
 
-- [x] 119 automated tests passing (13 unit/integration, 106 end-to-end)
+- [x] 123 automated tests passing (13 unit/integration, 110 end-to-end)
 - [x] No horizontal scroll on any route at 320/390/430/768/1024/1280/1536px
 - [x] Form controls ≥44px tall with 16px text (no iOS zoom-on-focus)
 - [x] Lead + consents + outbox event commit in one transaction
@@ -49,6 +49,8 @@ Tick these against the **deployed** site, not localhost.
 - [x] No reveal animation can leave on-screen content invisible — asserted in both
       motion branches and under print emulation
 - [x] Photography licensed CC0 with provenance recorded
+- [x] Text over photography verified against REAL rendered pixels, not the DOM —
+      covers the hero carousel and every overlay band, on mobile and desktop
 - [x] `pnpm lint`, `pnpm typecheck`, `pnpm build` all clean
 
 ## Not yet done

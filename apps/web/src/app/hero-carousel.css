@@ -1,0 +1,57 @@
+/* ==========================================================================
+   Hero backdrop carousel.
+
+   Three plates cross-fading on a 21s loop, done entirely in CSS. A JS carousel
+   would mean shipping a library, hydrating, and running a timer on the main
+   thread for a purely decorative effect — on a page reached by QR code over
+   event wifi that is the wrong trade.
+
+   Each slide holds for ~6s and cross-fades over ~1s. Slides are staggered by
+   animation-delay rather than by scripting an index.
+   ========================================================================== */
+@keyframes hero-cycle {
+  0% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+  28.5% {
+    opacity: 1;
+  }
+  33.3% {
+    opacity: 0;
+  }
+  95.2% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+.hero-slide {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-slide {
+    animation: hero-cycle 21s linear infinite;
+  }
+
+  .hero-slide:nth-child(2) {
+    animation-delay: 7s;
+  }
+
+  .hero-slide:nth-child(3) {
+    animation-delay: 14s;
+  }
+}
+
+/* No movement requested: show the first plate only, statically. There is no
+   point cross-fading between images for someone who asked for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide:first-child {
+    opacity: 1;
+  }
+}

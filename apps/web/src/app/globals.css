@@ -3,6 +3,7 @@
    the utilities layer, where source order decides against equal specificity. */
 @import "./surfaces.css";
 @import "./motion.css";
+@import "./hero-carousel.css";
 
 /* ==========================================================================
    Gateway Skills Network — design tokens

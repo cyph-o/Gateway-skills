@@ -8,7 +8,13 @@ import type { QualificationBadge } from "@/content/types";
  */
 export function QualificationBadges({ items }: { items: readonly QualificationBadge[] }) {
   return (
-    <ul className="reveal-stagger grid grid-cols-1 gap-px bg-line sm:grid-cols-2 lg:grid-cols-4">
+    // Light tiles that may sit inside a forest hero: data-surface resets the
+    // inherited dark-surface text colours, or the headings render light on a
+    // light tile and vanish.
+    <ul
+      data-surface="light"
+      className="reveal-stagger grid grid-cols-1 gap-px bg-line sm:grid-cols-2 lg:grid-cols-4"
+    >
       {items.map((item) => (
         <li key={item.label} className="bg-ground p-5 md:p-6">
           <Icon name={item.icon} className="h-6 w-6 text-emerald" />

@@ -25,6 +25,8 @@ import {
   aiUseCasesHeader,
 } from "@/content/ai-automation";
 import { automationImageSection, photos } from "@/content/imagery";
+import { OverlaySection } from "@/components/sections/OverlaySection";
+import { bandImages, careShowPlates } from "@/content/overlays";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
@@ -46,7 +48,7 @@ export default function CareShowAiAutomationPage() {
   return (
     <>
       <PageHero
-        tone="forest"
+        plates={careShowPlates}
         eyebrow={aiHero.eyebrow}
         headline={aiHero.headline}
         standfirst={aiHero.standfirst}
@@ -75,6 +77,13 @@ export default function CareShowAiAutomationPage() {
         points={automationImageSection.points}
         image={photos.automationAdmin}
         reverse
+      />
+
+      <OverlaySection
+        eyebrow="The live project"
+        heading="A working assistant, built inside your facility"
+        body="Every apprentice delivers a practical automation assistant addressing a real bottleneck in your service during their training — not a classroom exercise written up afterwards."
+        image={bandImages.desk}
       />
 
       <RoleGrid header={aiRolesHeader} items={aiRoles} />

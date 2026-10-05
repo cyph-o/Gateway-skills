@@ -74,11 +74,12 @@ async function auditOverlays(page: Page, route: string) {
   );
 
   const failures: string[] = [];
-  const sections = page.locator("[data-overlay]");
+  // Photographic heroes carry text over an image exactly as overlay bands do.
+  const sections = page.locator('[data-overlay], section:has(.hero-slide)');
 
   for (let i = 0; i < (await sections.count()); i += 1) {
     const section = sections.nth(i);
-    const texts = section.locator("h2, p, dd span");
+    const texts = section.locator("h1, h2, p, dd span");
     for (let j = 0; j < (await texts.count()); j += 1) {
       const el = texts.nth(j);
       const content = (await el.textContent())?.trim() ?? "";

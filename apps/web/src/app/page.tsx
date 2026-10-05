@@ -14,6 +14,7 @@ import {
   careOverlay,
   fundingOverlay,
   fundingStats,
+  heroPlates,
   leadershipOverlay,
   overlayImages,
 } from "@/content/overlays";
@@ -33,15 +34,16 @@ export default function HomePage() {
   return (
     <>
       <PageHero
+        plates={heroPlates}
         eyebrow={homeHero.eyebrow}
         headline={homeHero.headline}
         standfirst={homeHero.standfirst}
         actions={
           <>
-            <ButtonLink href="#enquire" size="lg">
+            <ButtonLink href="#enquire" size="lg" variant="on-forest">
               Check your funding
             </ButtonLink>
-            <ButtonLink href="#leadership" size="lg" variant="outline">
+            <ButtonLink href="#leadership" size="lg" variant="outline-light">
               Explore programmes
             </ButtonLink>
           </>

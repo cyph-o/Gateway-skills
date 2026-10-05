@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 
-type Variant = "primary" | "outline" | "on-forest";
+type Variant = "primary" | "outline" | "outline-light" | "on-forest";
 type Size = "md" | "lg";
 
 const base =
@@ -12,6 +12,8 @@ const variants: Record<Variant, string> = {
   primary: "bg-emerald text-white hover:bg-emerald-deep",
   outline:
     "border border-line-strong bg-transparent text-ink-strong hover:border-emerald hover:text-emerald",
+  "outline-light":
+    "border border-white/45 bg-white/5 text-white backdrop-blur-sm hover:border-white hover:bg-white/15",
   "on-forest": "bg-white text-forest hover:bg-mist",
 };
 

@@ -22,6 +22,8 @@ import {
   leadershipEligibilityHeader,
 } from "@/content/leadership-programme";
 import { careImageSection, photos } from "@/content/imagery";
+import { OverlaySection } from "@/components/sections/OverlaySection";
+import { bandImages, careShowPlates } from "@/content/overlays";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
@@ -38,11 +40,12 @@ export default function CareShowLeadershipPage() {
   return (
     <>
       <PageHero
+        plates={careShowPlates}
         eyebrow={leadershipHero.eyebrow}
         headline={leadershipHero.headline}
         standfirst={leadershipHero.standfirst}
         actions={
-          <ButtonLink href="#register" size="lg">
+          <ButtonLink href="#register" size="lg" variant="on-forest">
             {leadershipFormCopy.submitLabel}
           </ButtonLink>
         }
@@ -70,6 +73,14 @@ export default function CareShowLeadershipPage() {
         points={careImageSection.points}
         image={photos.careDignity}
         tone="ground"
+      />
+
+      <OverlaySection
+        eyebrow="Delivered around the day job"
+        heading="Managers stay in post while they qualify"
+        body="Learning is scheduled around shifts and applied to the service they already run, so the organisation sees the benefit while the programme is still running."
+        image={bandImages.advisers}
+        tone="light"
       />
 
       <EligibilityPanel

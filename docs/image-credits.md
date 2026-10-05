@@ -16,6 +16,14 @@ safest footing available for a commercial site.
 | `automation-desk-*` | Administrator working at a laptop | StockSnap | CC0 1.0 |
 | `automation-admin-*` | Administrator at a laptop in an office | StockSnap | CC0 1.0 |
 
+## Derived plates
+
+The same six originals also produce wide background plates (`bg-*`, 1800px) and
+hero plates (`hero-*`, 2000px) for the full-bleed overlay sections and the hero
+carousel. Sources top out at 960px, so these are upscaled with Lanczos —
+acceptable only because every one sits under a heavy scrim, which hides the
+softness that would be obvious in a crisp foreground image.
+
 ## Treatment
 
 All six are colour-graded identically — desaturated to 55% with a cool green

@@ -38,6 +38,7 @@ import {
   leadershipProjectExamples,
 } from "@/content/leadership-programme";
 import { careImageSection, leadershipImageSection, photos } from "@/content/imagery";
+import { careShowPlates } from "@/content/overlays";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
@@ -52,11 +53,12 @@ export default function LeadershipProgrammePage() {
   return (
     <>
       <PageHero
+        plates={careShowPlates}
         eyebrow={leadershipProgrammeHero.eyebrow}
         headline={leadershipProgrammeHero.headline}
         standfirst={leadershipProgrammeHero.standfirst}
         actions={
-          <ButtonLink href="#register" size="lg">
+          <ButtonLink href="#register" size="lg" variant="on-forest">
             Check your funding eligibility
           </ButtonLink>
         }

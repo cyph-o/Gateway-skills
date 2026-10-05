@@ -27,6 +27,7 @@ import {
   automationProjectImageSection,
   photos,
 } from "@/content/imagery";
+import { careShowPlates } from "@/content/overlays";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
@@ -47,7 +48,7 @@ export default function AiAutomationProgrammePage() {
   return (
     <>
       <PageHero
-        tone="forest"
+        plates={careShowPlates}
         eyebrow={aiHero.eyebrow}
         headline={aiHero.headline}
         standfirst={aiHero.standfirst}

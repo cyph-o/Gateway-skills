@@ -65,3 +65,34 @@ export const careOverlay = {
     "Governance, retention and resource decisions determine how much time staff spend " +
     "with residents, and how consistently a service performs under inspection.",
 } as const;
+
+/** Cross-fading hero plates. Decorative — the heading carries the meaning. */
+export const heroPlates = [
+  { src: "/images/photos/hero-1-w2000.webp", alt: "" },
+  { src: "/images/photos/hero-2-w2000.webp", alt: "" },
+  { src: "/images/photos/hero-3-w2000.webp", alt: "" },
+] as const;
+
+export const careShowPlates = [
+  { src: "/images/photos/hero-2-w2000.webp", alt: "" },
+  { src: "/images/photos/hero-1-w2000.webp", alt: "" },
+] as const;
+
+export const bandImages = {
+  admin: {
+    src: "/images/photos/bg-admin-w1800.webp",
+    alt: "A care administrator working at a laptop",
+  },
+  desk: {
+    src: "/images/photos/bg-desk-w1800.webp",
+    alt: "An administrator working through documents at a desk",
+  },
+  support: {
+    src: "/images/photos/bg-support-w1800.webp",
+    alt: "A carer steadying a walking frame for an older person",
+  },
+  advisers: {
+    src: "/images/photos/bg-advisers-w1800.webp",
+    alt: "Advisers in discussion around a laptop",
+  },
+} as const;

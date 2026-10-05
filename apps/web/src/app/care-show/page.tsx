@@ -9,6 +9,7 @@ import {
   careShowRoutes,
   careShowRoutesHeader,
 } from "@/content/care-show";
+import { careShowPlates } from "@/content/overlays";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
@@ -25,6 +26,7 @@ export default function CareShowHubPage() {
   return (
     <>
       <PageHero
+        plates={careShowPlates}
         eyebrow={careShowHubHero.eyebrow}
         headline={careShowHubHero.headline}
         standfirst={careShowHubHero.standfirst}
