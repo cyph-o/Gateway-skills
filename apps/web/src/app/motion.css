@@ -1,0 +1,147 @@
+/* ==========================================================================
+   Motion.
+
+   Scroll-driven animations in pure CSS — no JavaScript, no hydration cost, no
+   layout thrash on the main thread. On a page reached by QR code over event
+   wifi, shipping ~30KB of animation runtime to fade some headings in would be
+   a poor trade.
+
+   Two gates, both required:
+     1. prefers-reduced-motion: no-preference — nobody who asked for less
+        movement gets any of this.
+     2. @supports including `animation-range` — browsers with only partial
+        scroll-timeline support would otherwise apply the `backwards` fill and
+        leave content stuck at opacity 0. Content visibility must never depend
+        on an animation succeeding.
+
+   Unsupported browsers simply render everything, immediately. That is the
+   correct fallback for a lead-generation page.
+   ========================================================================== */
+
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.75rem);
+  }
+}
+
+@keyframes reveal-settle {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes reveal-slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(-1.5rem);
+  }
+}
+
+@keyframes reveal-slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(1.5rem);
+  }
+}
+
+/* Easing: a long, decelerating curve. Things arrive and settle rather than
+   snapping — the difference between "animated" and cinematic. */
+@media (prefers-reduced-motion: no-preference) {
+  /* --- On-load entrance, for content already in view (the hero) ---------- */
+  .hero-enter > * {
+    animation: reveal-rise 0.85s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+
+  .hero-enter > *:nth-child(1) {
+    animation-delay: 0.05s;
+  }
+  .hero-enter > *:nth-child(2) {
+    animation-delay: 0.14s;
+  }
+  .hero-enter > *:nth-child(3) {
+    animation-delay: 0.23s;
+  }
+  .hero-enter > *:nth-child(4) {
+    animation-delay: 0.32s;
+  }
+
+  .hero-visual {
+    animation: reveal-settle 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
+  }
+
+  /* --- Scroll-driven reveals, for everything below the fold -------------- */
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    .reveal {
+      animation: reveal-rise auto cubic-bezier(0.16, 1, 0.3, 1) backwards;
+      animation-timeline: view();
+      /* Finishes well before the element centres, so nothing is still moving
+         while it is being read. */
+      animation-range: entry 5% entry 48%;
+    }
+
+    /* Applied to the image itself. The clip lives on an untransformed parent:
+       an element cannot clip its own transform, so scaling the clipper would
+       push the page sideways for the duration of the animation. */
+    .reveal-image {
+      animation: reveal-settle auto cubic-bezier(0.16, 1, 0.3, 1) backwards;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+      transform-origin: center;
+    }
+
+    .reveal-left {
+      animation: reveal-slide-left auto cubic-bezier(0.16, 1, 0.3, 1) backwards;
+      animation-timeline: view();
+      animation-range: entry 5% entry 50%;
+    }
+
+    .reveal-right {
+      animation: reveal-slide-right auto cubic-bezier(0.16, 1, 0.3, 1) backwards;
+      animation-timeline: view();
+      animation-range: entry 5% entry 50%;
+    }
+
+    /* Staggered children. Scroll timelines ignore animation-delay, so the
+       stagger is expressed as progressively later ranges instead. */
+    .reveal-stagger > * {
+      animation: reveal-rise auto cubic-bezier(0.16, 1, 0.3, 1) backwards;
+      animation-timeline: view();
+      animation-range: entry 5% entry 45%;
+    }
+    .reveal-stagger > *:nth-child(2) {
+      animation-range: entry 9% entry 49%;
+    }
+    .reveal-stagger > *:nth-child(3) {
+      animation-range: entry 13% entry 53%;
+    }
+    .reveal-stagger > *:nth-child(4) {
+      animation-range: entry 17% entry 57%;
+    }
+    .reveal-stagger > *:nth-child(5) {
+      animation-range: entry 21% entry 61%;
+    }
+    .reveal-stagger > *:nth-child(n + 6) {
+      animation-range: entry 25% entry 65%;
+    }
+  }
+}
+
+/* Printing (and full-page capture, which resizes the viewport to the document
+   height) leaves every scroll timeline at 0% progress, so a `backwards` fill
+   would render the page blank. Content must never depend on a timeline that
+   cannot advance. */
+@media print {
+  .reveal,
+  .reveal-image,
+  .reveal-left,
+  .reveal-right,
+  .reveal-stagger > *,
+  .hero-enter > *,
+  .hero-visual {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
