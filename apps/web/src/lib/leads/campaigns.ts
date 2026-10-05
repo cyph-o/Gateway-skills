@@ -5,22 +5,22 @@
  */
 export const CAMPAIGNS = {
   care_show_leadership: {
-    label: "Care Show — Strategic Leadership & Service Design",
+    label: "Care Show: Strategic Leadership & Service Design",
     programme: "Leadership",
   },
   care_show_ai_automation: {
-    label: "Care Show — AI & Automation Practitioner",
+    label: "Care Show: AI & Automation Practitioner",
     programme: "AI & Automation",
   },
   programme_leadership: {
-    label: "Website — Strategic Leadership & Service Design",
+    label: "Website: Strategic Leadership & Service Design",
     programme: "Leadership",
   },
   programme_ai_automation: {
-    label: "Website — AI & Automation Practitioner",
+    label: "Website: AI & Automation Practitioner",
     programme: "AI & Automation",
   },
-  general_contact: { label: "Website — General enquiry", programme: "General" },
+  general_contact: { label: "Website: General enquiry", programme: "General" },
 } as const;
 
 export type CampaignId = keyof typeof CAMPAIGNS;

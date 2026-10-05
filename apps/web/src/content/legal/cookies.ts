@@ -15,7 +15,7 @@ export const cookiePolicy: LegalDocument = {
           "cookies to build a profile of you.",
         "Our analytics are cookieless: they count page views and aggregate interactions " +
           "without storing an identifier on your device or following you to other sites. " +
-          "Because nothing non-essential is stored, no consent banner is required — which " +
+          "Because nothing non-essential is stored, no consent banner is required, which " +
           "also means nothing blocks the enquiry form when you scan a QR code at an event.",
       ],
     },

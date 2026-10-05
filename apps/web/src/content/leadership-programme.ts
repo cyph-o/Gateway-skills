@@ -10,7 +10,7 @@ export const leadershipProgrammeHero = {
   eyebrow: "CMI Level 7 · Level 6 Service Designer",
   headline: "Develop the strategic leaders your care organisation needs",
   standfirst:
-    "From operational management to strategic service design — an executive pathway " +
+    "From operational management to strategic service design: an executive pathway " +
     "built to elevate leadership capability, regulatory confidence, and long-term care " +
     "quality. Delivered flexibly around active care roles.",
 } as const;

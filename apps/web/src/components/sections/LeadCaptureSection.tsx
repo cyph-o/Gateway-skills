@@ -17,7 +17,7 @@ interface LeadCaptureSectionProps {
 }
 
 const DEFAULT_ASSURANCES = [
-  "No obligation — the audit establishes what you qualify for",
+  "No obligation: the audit establishes what you qualify for",
   "Your details are used to respond to this enquiry",
   "A senior adviser replies directly, not an automated sequence",
 ] as const;
