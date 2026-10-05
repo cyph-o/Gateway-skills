@@ -15,7 +15,7 @@ export function ProgrammeJourney({
     <section className="border-t border-line bg-ground py-20 md:py-28">
       <Container>
         <SectionHeading {...header} />
-        <ol className="mt-14 grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-3">
+        <ol className="reveal-stagger mt-14 grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-3">
           {steps.map((step, i) => (
             <li key={step.label} className="bg-ground p-6 md:p-8">
               <span className="label-mono text-emerald">{String(i + 1).padStart(2, "0")}</span>

@@ -34,7 +34,7 @@ export function PageHero({
     >
       <Container className="pt-16 pb-14 md:pt-24 md:pb-20">
         <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-16">
-          <div>
+          <div className="hero-enter">
             <Eyebrow className={forest ? "text-emerald-lift" : ""}>{eyebrow}</Eyebrow>
             <h1 className="mt-6 text-display-xl">
               {headline}
@@ -50,13 +50,13 @@ export function PageHero({
           </div>
 
           <NetworkField
-            className={`hidden h-auto w-full max-w-sm lg:block ${
+            className={`hero-visual hidden h-auto w-full max-w-sm lg:block ${
               forest ? "text-emerald-lift" : "text-emerald"
             }`}
           />
         </div>
 
-        {footer ? <div className="mt-14 md:mt-20">{footer}</div> : null}
+        {footer ? <div className="reveal mt-14 md:mt-20">{footer}</div> : null}
       </Container>
     </section>
   );

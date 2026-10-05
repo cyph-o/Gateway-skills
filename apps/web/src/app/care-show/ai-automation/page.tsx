@@ -2,6 +2,7 @@ import { Container } from "@/components/layout/Container";
 import { ButtonLink } from "@/components/primitives/Button";
 import { FundingSection } from "@/components/sections/FundingSection";
 import { LeadCaptureSection } from "@/components/sections/LeadCaptureSection";
+import { ImageSection } from "@/components/sections/ImageSection";
 import { PageHero } from "@/components/sections/PageHero";
 import { PropositionRows } from "@/components/sections/PropositionRows";
 import { RoleGrid } from "@/components/sections/RoleGrid";
@@ -23,6 +24,7 @@ import {
   aiUseCases,
   aiUseCasesHeader,
 } from "@/content/ai-automation";
+import { automationImageSection, photos } from "@/content/imagery";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
@@ -64,6 +66,15 @@ export default function CareShowAiAutomationPage() {
         steps={aiProjectFlow}
         targets={aiProjectTargets}
         oversightNote={aiOversightNote}
+      />
+
+      <ImageSection
+        eyebrow={automationImageSection.eyebrow}
+        heading={automationImageSection.heading}
+        body={automationImageSection.body}
+        points={automationImageSection.points}
+        image={photos.automationAdmin}
+        reverse
       />
 
       <RoleGrid header={aiRolesHeader} items={aiRoles} />

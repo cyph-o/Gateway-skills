@@ -18,6 +18,27 @@ const ROUTES = [
  *  tablet portrait, tablet landscape, laptop, desktop. */
 const WIDTHS = [320, 390, 430, 768, 1024, 1280, 1536];
 
+/** Bounded wait for in-flight images. Never awaits decode() on a lazy image
+ *  that has not started loading — that promise never resolves. */
+async function settleImages(page: Page) {
+  await page.evaluate(
+    () =>
+      new Promise<void>((done) => {
+        const pending = Array.from(document.images).filter((img) => !img.complete);
+        if (pending.length === 0) return done();
+        let left = pending.length;
+        const tick = () => {
+          if (--left <= 0) done();
+        };
+        for (const img of pending) {
+          img.addEventListener("load", tick, { once: true });
+          img.addEventListener("error", tick, { once: true });
+        }
+        setTimeout(done, 1200);
+      }),
+  );
+}
+
 async function horizontalOverflow(page: Page) {
   return page.evaluate(() => {
     const doc = document.documentElement;
@@ -40,11 +61,18 @@ async function horizontalOverflow(page: Page) {
 
 for (const route of ROUTES) {
   test(`${route} never scrolls sideways at any width`, async ({ page }) => {
+    // Navigate once, then resize. Re-navigating per width multiplied load time
+    // by seven and blew the test budget once photography was added; resizing
+    // exercises the same reflow and keeps images warm.
+    await page.setViewportSize({ width: WIDTHS[0]!, height: 900 });
+    await page.goto(route, { waitUntil: "load" });
+    await settleImages(page);
+
     for (const width of WIDTHS) {
       await page.setViewportSize({ width, height: 900 });
-      await page.goto(route, { waitUntil: "load" });
-      // Let fluid type and any late web font settle before measuring.
-      await page.waitForTimeout(250);
+      // Let fluid type, grid reflow and any late web font settle.
+      await page.waitForTimeout(220);
+
       const result = await horizontalOverflow(page);
       expect(
         result.scrollWidth,

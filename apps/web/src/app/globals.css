@@ -2,6 +2,7 @@
 /* Surface-aware utilities. Imported after Tailwind so its rules land later in
    the utilities layer, where source order decides against equal specificity. */
 @import "./surfaces.css";
+@import "./motion.css";
 
 /* ==========================================================================
    Gateway Skills Network — design tokens
@@ -91,6 +92,17 @@
     -webkit-text-size-adjust: 100%;
     /* Belt-and-braces: no element may push the page sideways on a phone. */
     overflow-x: hidden;
+    /* In-page links glide to their section. The reduced-motion block below
+       forces this back to `auto`, so anyone who asks for less movement gets an
+       instant jump instead. */
+    scroll-behavior: smooth;
+  }
+
+  /* Anchor targets must clear the sticky header, or a linked section lands
+     underneath it. Applied to anything addressable rather than per-component,
+     so a new anchor can never be added without the offset. */
+  :where([id]) {
+    scroll-margin-top: 6rem;
   }
 
   /* Long unbroken strings (an email address, a reference) must not overflow. */

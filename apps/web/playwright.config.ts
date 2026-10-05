@@ -11,6 +11,12 @@ export default defineConfig({
   use: {
     // Pinned to 4321 so the app never collides with other local projects.
     baseURL: process.env.E2E_BASE_URL ?? "http://localhost:4321",
+    // Functional specs run under reduced motion. Smooth anchor scrolling means
+    // an off-screen control is still animating when Playwright's actionability
+    // check samples it, so clicks time out non-deterministically. Reduced
+    // motion is a first-class supported experience here, not a test-only hack —
+    // and motion itself is covered explicitly in motion.spec.ts.
+    reducedMotion: "reduce",
     trace: "on-first-retry",
   },
   projects: [

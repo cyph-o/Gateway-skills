@@ -16,7 +16,7 @@ export function RoleGrid({
     <section className="border-t border-line bg-surface py-20 md:py-28">
       <Container>
         <SectionHeading {...header} />
-        <ul className="mt-12 grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="reveal-stagger mt-12 grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item) => (
             <li key={item.label} className="flex items-center gap-4 bg-surface p-6">
               <Icon name={item.icon} className="h-6 w-6 shrink-0 text-emerald" />

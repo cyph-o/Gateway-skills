@@ -4,6 +4,7 @@ import { CqcOutcomes } from "@/components/sections/CqcOutcomes";
 import { EligibilityPanel } from "@/components/sections/EligibilityPanel";
 import { FundingSection } from "@/components/sections/FundingSection";
 import { LeadCaptureSection } from "@/components/sections/LeadCaptureSection";
+import { ImageSection } from "@/components/sections/ImageSection";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProgrammeJourney } from "@/components/sections/ProgrammeJourney";
 import { PropositionRows } from "@/components/sections/PropositionRows";
@@ -36,6 +37,7 @@ import {
   leadershipProgrammeHero,
   leadershipProjectExamples,
 } from "@/content/leadership-programme";
+import { careImageSection, leadershipImageSection, photos } from "@/content/imagery";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
@@ -62,6 +64,14 @@ export default function LeadershipProgrammePage() {
       />
 
       <RoleGrid header={leadershipPressureHeader} items={leadershipPressures} />
+      <ImageSection
+        eyebrow={careImageSection.eyebrow}
+        heading={careImageSection.heading}
+        body={careImageSection.body}
+        points={careImageSection.points}
+        image={photos.careDignity}
+      />
+
       <CqcOutcomes header={cqcOutcomesHeader} items={cqcOutcomes} />
 
       <PropositionRows
@@ -77,6 +87,16 @@ export default function LeadershipProgrammePage() {
       />
 
       <ProgrammeJourney header={leadershipJourneyHeader} steps={leadershipJourney} />
+
+      <ImageSection
+        eyebrow={leadershipImageSection.eyebrow}
+        heading={leadershipImageSection.heading}
+        body={leadershipImageSection.body}
+        points={leadershipImageSection.points}
+        image={photos.leadershipTeam}
+        reverse
+        tone="ground"
+      />
 
       <RoleGrid header={leadershipRoiHeader} items={leadershipRoi} />
 

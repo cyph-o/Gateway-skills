@@ -26,7 +26,7 @@ export function TransformationFlow({
       <Container>
         <SectionHeading {...header} />
 
-        <ol className="mt-14 grid grid-cols-1 gap-px bg-on-forest-line/50 sm:grid-cols-2 lg:grid-cols-5">
+        <ol className="reveal-stagger mt-14 grid grid-cols-1 gap-px bg-on-forest-line/50 sm:grid-cols-2 lg:grid-cols-5">
           {steps.map((step, i) => (
             <li key={step.label} className="bg-forest p-6">
               <span className="label-mono text-emerald-lift">{String(i + 1).padStart(2, "0")}</span>

@@ -29,7 +29,7 @@ Tick these against the **deployed** site, not localhost.
 
 ## Verified in this build
 
-- [x] 93 automated tests passing (13 unit/integration, 80 end-to-end)
+- [x] 119 automated tests passing (13 unit/integration, 106 end-to-end)
 - [x] No horizontal scroll on any route at 320/390/430/768/1024/1280/1536px
 - [x] Form controls ≥44px tall with 16px text (no iOS zoom-on-focus)
 - [x] Lead + consents + outbox event commit in one transaction
@@ -45,6 +45,10 @@ Tick these against the **deployed** site, not localhost.
 - [x] **No-JavaScript submission verified** — persists, normalises, dedupes and
       shows validation errors with JS disabled
 - [x] Open Graph share image renders
+- [x] In-page links glide to their section and clear the sticky header
+- [x] No reveal animation can leave on-screen content invisible — asserted in both
+      motion branches and under print emulation
+- [x] Photography licensed CC0 with provenance recorded
 - [x] `pnpm lint`, `pnpm typecheck`, `pnpm build` all clean
 
 ## Not yet done
@@ -56,3 +60,5 @@ Tick these against the **deployed** site, not localhost.
 - [ ] Sentry or equivalent error alerting — needs a DSN. Structured JSON logs
       with redaction are already in place (`src/lib/logger.ts`).
 - [ ] Re-run the whole suite against the production domain once DNS is live.
+- [ ] Replace the CC0 placeholder photography with commissioned images of real
+      partner settings — see `docs/image-credits.md`.

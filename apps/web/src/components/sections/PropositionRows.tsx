@@ -23,7 +23,7 @@ export function PropositionRows({ header, items, tone = "ground" }: PropositionR
     >
       <Container>
         <SectionHeading {...header} />
-        <ol className="mt-14">
+        <ol className="reveal-stagger mt-14">
           {items.map((item, i) => (
             <li
               key={item.title}

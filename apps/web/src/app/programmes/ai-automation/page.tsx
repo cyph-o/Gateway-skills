@@ -2,6 +2,7 @@ import { ButtonLink } from "@/components/primitives/Button";
 import { ClosingCta } from "@/components/sections/ClosingCta";
 import { FundingSection } from "@/components/sections/FundingSection";
 import { LeadCaptureSection } from "@/components/sections/LeadCaptureSection";
+import { ImageSection } from "@/components/sections/ImageSection";
 import { PageHero } from "@/components/sections/PageHero";
 import { PropositionRows } from "@/components/sections/PropositionRows";
 import { RoleGrid } from "@/components/sections/RoleGrid";
@@ -21,6 +22,11 @@ import {
   aiUseCases,
   aiUseCasesHeader,
 } from "@/content/ai-automation";
+import {
+  automationImageSection,
+  automationProjectImageSection,
+  photos,
+} from "@/content/imagery";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
@@ -53,6 +59,14 @@ export default function AiAutomationProgrammePage() {
       />
 
       <PropositionRows header={pillarHeader} items={aiPillars} tone="surface" />
+      <ImageSection
+        eyebrow={automationImageSection.eyebrow}
+        heading={automationImageSection.heading}
+        body={automationImageSection.body}
+        points={automationImageSection.points}
+        image={photos.automationAdmin}
+      />
+
       <UseCaseRows header={aiUseCasesHeader} items={aiUseCases} />
 
       <TransformationFlow
@@ -60,6 +74,16 @@ export default function AiAutomationProgrammePage() {
         steps={aiProjectFlow}
         targets={aiProjectTargets}
         oversightNote={aiOversightNote}
+      />
+
+      <ImageSection
+        eyebrow={automationProjectImageSection.eyebrow}
+        heading={automationProjectImageSection.heading}
+        body={automationProjectImageSection.body}
+        points={automationProjectImageSection.points}
+        image={photos.automationDesk}
+        reverse
+        tone="ground"
       />
 
       <RoleGrid header={aiRolesHeader} items={aiRoles} />

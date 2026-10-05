@@ -22,7 +22,7 @@ export function UseCaseRows({
     <section className="border-t border-line bg-ground py-20 md:py-28">
       <Container>
         <SectionHeading {...header} />
-        <div className="mt-14 space-y-px bg-line">
+        <div className="reveal-stagger mt-14 space-y-px bg-line">
           {items.map((item) => (
             <article key={item.title} className="bg-ground py-9 md:py-11">
               <div className="flex items-start gap-4">

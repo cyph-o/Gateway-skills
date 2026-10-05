@@ -63,7 +63,7 @@ Consequences worth knowing:
 
 ## Testing
 
-93 automated tests. The e2e suite runs against a running server on port 4321
+119 automated tests. The e2e suite runs against a running server on port 4321
 (`pnpm build && pnpm start` in another terminal), and covers:
 
 - **Lead capture** — transactional persistence, idempotency, validation, honeypot and timing rejection
@@ -72,6 +72,20 @@ Consequences worth knowing:
 - **Contrast** — every rendered text node measured against its true background for WCAG AA
 - **Accessibility** — axe WCAG 2.2 A/AA sweep on all 11 routes, keyboard operability, heading structure
 - **Outbox durability** — an email outage keeps the lead, schedules a bounded retry, then dead-letters
+- **Motion** — smooth anchor scrolling, reduced-motion respected, and the guarantee that no
+  reveal animation can ever leave on-screen content invisible (including when printing)
+
+## Motion and imagery
+
+Scroll reveals are **pure CSS** (`animation-timeline: view()`), so the page ships no animation
+runtime — it would be a poor trade to send ~30KB of JavaScript to fade headings in on a page
+reached by QR code over event wifi. Two gates guard it: `prefers-reduced-motion` and an
+`@supports` check that includes `animation-range`, because browsers with partial support would
+otherwise apply the `backwards` fill and leave content stuck at opacity 0. Unsupported browsers
+render everything immediately.
+
+Photography is CC0, colour-graded to one treatment, and served as authored — see
+[`docs/image-credits.md`](docs/image-credits.md).
 
 ## Conventions
 

@@ -21,7 +21,7 @@ export function FundingSection({ header, routes }: FundingSectionProps) {
       <Container>
         <SectionHeading {...header} />
 
-        <div className="mt-14 grid gap-px bg-line md:grid-cols-2">
+        <div className="reveal-stagger mt-14 grid gap-px bg-line md:grid-cols-2">
           {routes.map((route) => (
             <div key={route.label} className="bg-surface p-7 md:p-10">
               <h3 className="label-mono text-emerald">{route.label}</h3>

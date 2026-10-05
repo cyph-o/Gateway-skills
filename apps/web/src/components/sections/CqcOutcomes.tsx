@@ -19,7 +19,7 @@ export function CqcOutcomes({
     <section data-surface="forest" className="bg-forest py-20 md:py-28">
       <Container>
         <SectionHeading {...header} />
-        <ol className="mt-14 grid gap-px bg-on-forest-line/50 sm:grid-cols-2 lg:grid-cols-5">
+        <ol className="reveal-stagger mt-14 grid gap-px bg-on-forest-line/50 sm:grid-cols-2 lg:grid-cols-5">
           {items.map((item) => (
             <li key={item.title} className="bg-forest p-6">
               <Icon name={item.icon} className="h-6 w-6 text-emerald-lift" />

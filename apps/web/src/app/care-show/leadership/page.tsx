@@ -4,6 +4,7 @@ import { ClosingCta } from "@/components/sections/ClosingCta";
 import { EligibilityPanel } from "@/components/sections/EligibilityPanel";
 import { FundingSection } from "@/components/sections/FundingSection";
 import { LeadCaptureSection } from "@/components/sections/LeadCaptureSection";
+import { ImageSection } from "@/components/sections/ImageSection";
 import { PageHero } from "@/components/sections/PageHero";
 import { PropositionRows } from "@/components/sections/PropositionRows";
 import { QualificationBadges } from "@/components/sections/QualificationBadges";
@@ -20,6 +21,7 @@ import {
   leadershipEligibility,
   leadershipEligibilityHeader,
 } from "@/content/leadership-programme";
+import { careImageSection, photos } from "@/content/imagery";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
@@ -59,6 +61,15 @@ export default function CareShowLeadershipPage() {
         header={leadershipPropositionsHeader}
         items={leadershipPropositions}
         tone="surface"
+      />
+
+      <ImageSection
+        eyebrow={careImageSection.eyebrow}
+        heading={careImageSection.heading}
+        body={careImageSection.body}
+        points={careImageSection.points}
+        image={photos.careDignity}
+        tone="ground"
       />
 
       <EligibilityPanel

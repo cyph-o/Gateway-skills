@@ -4,10 +4,12 @@ import { Container } from "@/components/layout/Container";
 import { ButtonLink } from "@/components/primitives/Button";
 import { Icon } from "@/components/primitives/Icon";
 import { SectionHeading } from "@/components/primitives/SectionHeading";
+import { ImageSection } from "@/components/sections/ImageSection";
 import { PageHero } from "@/components/sections/PageHero";
 import { PropositionRows } from "@/components/sections/PropositionRows";
 import { brand } from "@/content/brand";
 import { capabilities, capabilityHeader, connectorHeader, connectorPoints, homeHero } from "@/content/home";
+import { careImageSection, photos } from "@/content/imagery";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
@@ -64,6 +66,15 @@ export default function HomePage() {
           </ul>
         </Container>
       </section>
+
+      <ImageSection
+        eyebrow={careImageSection.eyebrow}
+        heading={careImageSection.heading}
+        body={careImageSection.body}
+        points={careImageSection.points}
+        image={photos.careDignity}
+        tone="ground"
+      />
 
       <PropositionRows header={connectorHeader} items={connectorPoints} />
     </>
