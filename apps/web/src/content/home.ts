@@ -5,7 +5,7 @@ export const homeHero = {
   headline: "Connecting Business to Future Skills",
   standfirst:
     "We connect UK employers to fully funded, higher-level qualifications in " +
-    "strategic leadership, service transformation, and AI & automation — delivered " +
+    "strategic leadership, service transformation, and AI & automation, delivered " +
     "through our authorised college network and ESFA registered training partners.",
   primaryCta: { href: "/programmes/leadership", label: "Explore programmes" },
   secondaryCta: { href: "/contact", label: "Check your funding" },

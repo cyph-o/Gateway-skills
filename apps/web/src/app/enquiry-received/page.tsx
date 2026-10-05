@@ -26,7 +26,7 @@ export default async function EnquiryReceivedPage({
     <Container width="text" className="py-20 md:py-28">
       <Eyebrow>Enquiry received</Eyebrow>
       <h1 className="mt-6 text-display-md">
-        Thank you — your funding audit request is with our advisers
+        Thank you, your funding audit request is with our advisers
       </h1>
       <p className="mt-6 text-lg leading-relaxed text-ink-muted">
         A senior adviser will be in touch directly to confirm your levy position and the

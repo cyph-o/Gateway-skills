@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { brand } from "@/content/brand";
 
-export const alt = `${brand.legalName} — ${brand.strapline}`;
+export const alt = `${brand.legalName}: ${brand.strapline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

@@ -40,7 +40,7 @@ export const privacyNotice: LegalDocument = {
     {
       heading: "Why we use it, and our lawful basis",
       paragraphs: [
-        "We use these details to respond to the enquiry you made — to assess your " +
+        "We use these details to respond to the enquiry you made: to assess your " +
           "organisation's funding eligibility and to contact you about it. Our lawful " +
           "basis is legitimate interests: you asked us to look into funding for your " +
           "organisation, and responding is what you would reasonably expect.",

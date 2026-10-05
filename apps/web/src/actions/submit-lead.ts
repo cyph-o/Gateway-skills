@@ -132,7 +132,7 @@ export async function submitLead(
       status: "error",
       errors: {
         form:
-          "We could not record your enquiry just now. Please try again — or email " +
+          "We could not record your enquiry just now. Please try again, or email " +
           "info@gatewayskillsnetwork.co.uk and we will pick it up directly.",
       },
       values,
