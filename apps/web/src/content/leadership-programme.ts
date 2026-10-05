@@ -16,7 +16,7 @@ export const leadershipProgrammeHero = {
 } as const;
 
 export const leadershipImpactHeader: SectionHeader = {
-  index: "Section 02",
+  eyebrow: "Organisational impact",
   heading: "Five areas of organisational impact",
   standfirst:
     "Each area maps to assessed programme modules, so capability is evidenced rather " +
@@ -62,7 +62,7 @@ export const leadershipImpactAreas: readonly Proposition[] = [
 ] as const;
 
 export const leadershipLearningHeader: SectionHeader = {
-  index: "Section 03",
+  eyebrow: "In practice",
   heading: "Service design and transformation in action",
   standfirst:
     "The Level 6 Service Designer apprenticeship complements the CMI Level 7 Diploma " +
@@ -89,7 +89,7 @@ export const leadershipProjectExamples: readonly string[] = [
 ] as const;
 
 export const leadershipJourneyHeader: SectionHeader = {
-  index: "Section 04",
+  eyebrow: "Delivery",
   heading: "How the programme runs",
   standfirst:
     "Delivered flexibly around active care roles, with structured employer checkpoints " +

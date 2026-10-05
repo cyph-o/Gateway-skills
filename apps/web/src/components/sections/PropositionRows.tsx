@@ -24,14 +24,11 @@ export function PropositionRows({ header, items, tone = "ground" }: PropositionR
       <Container>
         <SectionHeading {...header} />
         <ol className="reveal-stagger mt-14">
-          {items.map((item, i) => (
+          {items.map((item) => (
             <li
               key={item.title}
-              className="grid gap-5 border-t border-line py-9 md:grid-cols-[auto_1fr_minmax(0,1.6fr)] md:gap-10 md:py-11"
+              className="grid gap-5 border-t border-line py-9 md:grid-cols-[1fr_minmax(0,1.6fr)] md:gap-12 md:py-11"
             >
-              <span className="label-mono pt-1 text-ink-muted md:w-12">
-                {String(i + 1).padStart(2, "0")}
-              </span>
               <div className="flex items-start gap-4 md:block">
                 <Icon name={item.icon} className="h-7 w-7 shrink-0 text-emerald" />
                 <h3 className="text-xl leading-snug md:mt-5 md:text-2xl">{item.title}</h3>

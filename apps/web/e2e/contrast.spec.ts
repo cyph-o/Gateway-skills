@@ -32,6 +32,9 @@ async function textSamples(page: Page) {
       if (cs.visibility === "hidden" || cs.display === "none") continue;
       // Deliberately off-screen / hidden from assistive tech (e.g. the honeypot).
       if (el.closest('[aria-hidden="true"], .sr-only')) continue;
+      // Text over a photograph has no resolvable background-color; those
+      // sections are verified by sampling real pixels in overlay.spec.ts.
+      if (el.closest("[data-overlay]")) continue;
       out.push({
         text: text.slice(0, 50),
         color: cs.color,

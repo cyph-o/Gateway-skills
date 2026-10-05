@@ -3,7 +3,7 @@ import { Mail } from "lucide-react";
 import { LogoLockup } from "@/components/brand/LogoLockup";
 import { brand } from "@/content/brand";
 import { footerContact } from "@/content/footer";
-import { legalNav, primaryNav } from "@/content/nav";
+import { legalNav, programmeNav } from "@/content/nav";
 import { Container } from "./Container";
 import { CorporateStatement } from "./CorporateStatement";
 
@@ -33,7 +33,7 @@ export function SiteFooter() {
             <nav aria-label="Footer">
               <h2 className="label-mono text-emerald-lift">Programmes</h2>
               <ul className="mt-5 space-y-3">
-                {primaryNav.map((item) => (
+                {programmeNav.map((item) => (
                   <li key={item.href}>
                     <Link href={item.href} className="transition-colors hover:text-on-forest">
                       {item.label}

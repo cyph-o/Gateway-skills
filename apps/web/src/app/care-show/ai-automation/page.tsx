@@ -82,7 +82,7 @@ export default function CareShowAiAutomationPage() {
       <FundingSection header={aiFundingHeader} routes={aiFunding} />
 
       <LeadCaptureSection
-        index={aiFormCopy.index}
+        index={aiFormCopy.label}
         heading={aiFormCopy.heading}
         standfirst={aiFormCopy.standfirst}
         submitLabel={aiFormCopy.submitLabel}

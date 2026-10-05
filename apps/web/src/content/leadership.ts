@@ -42,7 +42,7 @@ export const leadershipBadges: readonly QualificationBadge[] = [
 ] as const;
 
 export const leadershipFormCopy = {
-  index: "Section 02",
+  label: "Register",
   heading: "Scan & Register for Q4 Funding Cohorts",
   standfirst:
     "Four details are all we need to assess your levy position and confirm " +
@@ -51,7 +51,7 @@ export const leadershipFormCopy = {
 } as const;
 
 export const leadershipPropositionsHeader: SectionHeader = {
-  index: "Section 03",
+  eyebrow: "What it changes",
   heading: "Service Design & Transformation in Social Care",
   standfirst:
     "Three operational problems the programme is built to resolve inside your organisation.",
@@ -82,7 +82,7 @@ export const leadershipPropositions: readonly Proposition[] = [
 ] as const;
 
 export const leadershipFundingHeader: SectionHeader = {
-  index: "Section 04",
+  eyebrow: "Funding",
   heading: "Government Co-Investment & Enrolment",
   standfirst:
     "How the programme is funded depends on whether your organisation pays the " +

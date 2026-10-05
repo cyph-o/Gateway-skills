@@ -27,9 +27,9 @@ export function TransformationFlow({
         <SectionHeading {...header} />
 
         <ol className="reveal-stagger mt-14 grid grid-cols-1 gap-px bg-on-forest-line/50 sm:grid-cols-2 lg:grid-cols-5">
-          {steps.map((step, i) => (
+          {steps.map((step) => (
             <li key={step.label} className="bg-forest p-6">
-              <span className="label-mono text-emerald-lift">{String(i + 1).padStart(2, "0")}</span>
+              <span aria-hidden="true" className="block h-0.5 w-8 bg-emerald-lift" />
               <h3 className="mt-4 font-sans text-base font-semibold text-on-forest">
                 {step.label}
               </h3>

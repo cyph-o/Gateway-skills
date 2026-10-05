@@ -44,7 +44,7 @@ export const aiPillars: readonly Proposition[] = [
 ] as const;
 
 export const aiUseCasesHeader: SectionHeader = {
-  index: "Section 02",
+  eyebrow: "Where it applies",
   heading: "Turning Everyday Care Tasks Into Smarter Workflows",
   standfirst: "Where care operators apply the capability, and what it returns.",
 };
@@ -87,7 +87,7 @@ export const aiUseCases: readonly UseCase[] = [
 ] as const;
 
 export const aiProjectHeader: SectionHeader = {
-  index: "Section 03",
+  eyebrow: "The live project",
   heading: "Training Becomes Practical Workplace Capability",
   standfirst:
     "The core differentiator of this apprenticeship is the Live Workplace " +
@@ -112,7 +112,7 @@ export const aiProjectTargets: readonly string[] = [
 ] as const;
 
 export const aiRolesHeader: SectionHeader = {
-  index: "Section 04",
+  eyebrow: "Who qualifies",
   heading: "Who Could Become Your AI & Automation Practitioner?",
   standfirst:
     "The framework trains people already inside your service — no new technical hire required.",
@@ -127,7 +127,7 @@ export const aiRoles: readonly RoleItem[] = [
 ] as const;
 
 export const aiFundingHeader: SectionHeader = {
-  index: "Section 05",
+  eyebrow: "Funding",
   heading: "Institutional Funding & Executive Value",
   standfirst:
     "Both funding routes are assessed during your introductory audit and funding check.",
@@ -154,7 +154,7 @@ export const aiFunding: readonly FundingRoute[] = [
 ] as const;
 
 export const aiFormCopy = {
-  index: "Section 06",
+  label: "Register",
   heading: "Book Your Automation & Funding Check",
   standfirst:
     "Identify your high-potential administrators, team leaders, or operations staff " +

@@ -50,7 +50,7 @@ export default function CareShowLeadershipPage() {
       />
 
       <LeadCaptureSection
-        index={leadershipFormCopy.index}
+        index={leadershipFormCopy.label}
         heading={leadershipFormCopy.heading}
         standfirst={leadershipFormCopy.standfirst}
         submitLabel={leadershipFormCopy.submitLabel}

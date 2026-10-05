@@ -1,25 +1,34 @@
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
-import { Container } from "@/components/layout/Container";
 import { ButtonLink } from "@/components/primitives/Button";
-import { Icon } from "@/components/primitives/Icon";
-import { SectionHeading } from "@/components/primitives/SectionHeading";
-import { ImageSection } from "@/components/sections/ImageSection";
+import { CapabilityCards } from "@/components/sections/CapabilityCards";
+import { LeadCaptureSection } from "@/components/sections/LeadCaptureSection";
+import { OverlaySection } from "@/components/sections/OverlaySection";
 import { PageHero } from "@/components/sections/PageHero";
+import { ProgrammeSummary } from "@/components/sections/ProgrammeSummary";
 import { PropositionRows } from "@/components/sections/PropositionRows";
 import { brand } from "@/content/brand";
 import { capabilities, capabilityHeader, connectorHeader, connectorPoints, homeHero } from "@/content/home";
-import { careImageSection, photos } from "@/content/imagery";
+import { aiPillars } from "@/content/ai-automation";
+import { leadershipPropositions } from "@/content/leadership";
+import {
+  automationOverlay,
+  careOverlay,
+  fundingOverlay,
+  fundingStats,
+  leadershipOverlay,
+  overlayImages,
+} from "@/content/overlays";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
   title: brand.strapline,
   description:
-    "Gateway Skills Network connects UK employers to fully funded higher-level " +
+    "Gateway Skills Network connects UK care employers to fully funded higher-level " +
     "qualifications in leadership, service transformation, and AI & automation.",
   path: "/",
 });
 
+/** One scrolling narrative. Navigation points at these section ids rather than
+ *  separate routes, so exploring the offer never reloads the page. */
 export default function HomePage() {
   return (
     <>
@@ -29,54 +38,92 @@ export default function HomePage() {
         standfirst={homeHero.standfirst}
         actions={
           <>
-            <ButtonLink href={homeHero.primaryCta.href} size="lg">
-              {homeHero.primaryCta.label}
+            <ButtonLink href="#enquire" size="lg">
+              Check your funding
             </ButtonLink>
-            <ButtonLink href={homeHero.secondaryCta.href} size="lg" variant="outline">
-              {homeHero.secondaryCta.label}
+            <ButtonLink href="#leadership" size="lg" variant="outline">
+              Explore programmes
             </ButtonLink>
           </>
         }
-        footer={<p className="label-mono text-ink-muted">{brand.disciplines}</p>}
       />
 
-      <section className="border-t border-line bg-surface py-20 md:py-28">
-        <Container>
-          <SectionHeading {...capabilityHeader} />
-          <ul className="mt-14 grid gap-px overflow-hidden rounded-sm border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
-            {capabilities.map((item) => (
-              <li key={item.title} className="bg-surface">
-                <Link
-                  href={item.href}
-                  className="group flex h-full flex-col p-7 transition-colors hover:bg-ground md:p-9"
-                >
-                  <Icon name={item.icon} className="h-7 w-7 text-emerald" />
-                  <h3 className="mt-6 text-2xl">{item.title}</h3>
-                  <p className="mt-3 flex-1 leading-relaxed text-ink-muted">{item.body}</p>
-                  <span className="label-mono mt-7 inline-flex items-center gap-2 text-emerald">
-                    View programme
-                    <ArrowRight
-                      className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1"
-                      aria-hidden="true"
-                    />
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </section>
+      <CapabilityCards header={capabilityHeader} items={capabilities} />
 
-      <ImageSection
-        eyebrow={careImageSection.eyebrow}
-        heading={careImageSection.heading}
-        body={careImageSection.body}
-        points={careImageSection.points}
-        image={photos.careDignity}
+      <OverlaySection
+        id="leadership"
+        height="tall"
+        eyebrow={leadershipOverlay.eyebrow}
+        heading={leadershipOverlay.heading}
+        body={leadershipOverlay.body}
+        image={overlayImages.leadership}
+        actions={
+          <ButtonLink href="/programmes/leadership" size="lg" variant="on-forest">
+            View the leadership programme
+          </ButtonLink>
+        }
+      />
+
+      <ProgrammeSummary
+        eyebrow="What it changes"
+        heading="Service design and transformation in social care"
+        items={leadershipPropositions}
+        href="/programmes/leadership"
+        linkLabel="Full programme detail"
+      />
+
+      <OverlaySection
+        id="ai-automation"
+        height="tall"
+        eyebrow={automationOverlay.eyebrow}
+        heading={automationOverlay.heading}
+        body={automationOverlay.body}
+        image={overlayImages.automation}
+        actions={
+          <ButtonLink href="/programmes/ai-automation" size="lg" variant="on-forest">
+            View the AI &amp; automation programme
+          </ButtonLink>
+        }
+      />
+
+      <ProgrammeSummary
+        eyebrow="Operational outcomes"
+        heading="Turning everyday care tasks into smarter workflows"
+        items={aiPillars}
+        href="/programmes/ai-automation"
+        linkLabel="Full programme detail"
         tone="ground"
       />
 
-      <PropositionRows header={connectorHeader} items={connectorPoints} />
+      <OverlaySection
+        id="funding"
+        eyebrow={fundingOverlay.eyebrow}
+        heading={fundingOverlay.heading}
+        body={fundingOverlay.body}
+        image={overlayImages.funding}
+        stats={fundingStats}
+        tone="light"
+      />
+
+      <PropositionRows header={connectorHeader} items={connectorPoints} tone="surface" />
+
+      <OverlaySection
+        id="approach"
+        eyebrow={careOverlay.eyebrow}
+        heading={careOverlay.heading}
+        body={careOverlay.body}
+        image={overlayImages.care}
+        tone="light"
+      />
+
+      <LeadCaptureSection
+        id="enquire"
+        index="Enquiry"
+        heading="Check your funding eligibility"
+        standfirst="Four details are all we need to assess your levy position and the cohorts your organisation qualifies for."
+        submitLabel="Secure My Funding Audit"
+        campaign="general_contact"
+      />
     </>
   );
 }

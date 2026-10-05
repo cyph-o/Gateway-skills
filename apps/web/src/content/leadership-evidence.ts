@@ -7,7 +7,6 @@ import type { Proposition, RoleItem, SectionHeader } from "./types";
  */
 
 export const leadershipPressureHeader: SectionHeader = {
-  index: "Section 01",
   heading: "Why care providers are investing in leadership development",
   standfirst: "Care providers face increasing pressure to:",
 };

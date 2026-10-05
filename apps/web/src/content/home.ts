@@ -12,7 +12,7 @@ export const homeHero = {
 } as const;
 
 export const capabilityHeader: SectionHeader = {
-  index: "Section 01",
+  eyebrow: "Capabilities",
   heading: "Three capabilities, one funded route",
   standfirst:
     "Each programme is built for the operational reality of a regulated " +
@@ -47,7 +47,7 @@ export const capabilities: readonly (Proposition & { href: string })[] = [
 ] as const;
 
 export const connectorHeader: SectionHeader = {
-  index: "Section 02",
+  eyebrow: "Our role",
   heading: "Gateway's role is the connection",
   standfirst:
     "We are not a college. We sit between employers and accredited delivery, so the " +
