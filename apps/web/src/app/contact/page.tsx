@@ -21,7 +21,7 @@ export default function ContactPage() {
         headline="Assess your levy eligibility and book a funding check"
         standfirst={
           "Tell us who you are and which organisation you represent. A senior adviser " +
-          "will come back to you directly — there is no automated sequence and no " +
+          "will come back to you directly. There is no automated sequence and no " +
           "obligation."
         }
         footer={

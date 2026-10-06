@@ -115,7 +115,7 @@ export const aiRolesHeader: SectionHeader = {
   eyebrow: "Who qualifies",
   heading: "Who Could Become Your AI & Automation Practitioner?",
   standfirst:
-    "The framework trains people already inside your service — no new technical hire required.",
+    "The framework trains people already inside your service. No new technical hire required.",
 };
 
 export const aiRoles: readonly RoleItem[] = [
@@ -172,7 +172,7 @@ export const aiClosing = {
 /** Responsible-use statement. The programme builds assistive automation; it does
  *  not place AI in clinical decision-making. Rendered on both AI pages. */
 export const aiOversightNote =
-  "Automation built during the programme supports your team — it does not make " +
+  "Automation built during the programme supports your team. It does not make " +
   "clinical decisions or replace professional care staff. Care records, " +
   "medication-related workflows and resident information remain under human " +
   "oversight, with appropriate access controls and data-protection safeguards.";

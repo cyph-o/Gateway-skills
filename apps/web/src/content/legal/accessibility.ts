@@ -14,7 +14,7 @@ export const accessibilityStatement: LegalDocument = {
         "This site is built to meet WCAG 2.2 level AA. In practice that means:",
       ],
       bullets: [
-        "Text contrast is measured, not assumed — body text sits well above the 4.5:1 minimum",
+        "Text contrast is measured, not assumed: body text sits well above the 4.5:1 minimum",
         "Every control can be reached and operated by keyboard, with a visible focus ring",
         "Form fields have real labels, and errors are announced and linked to their field",
         "Headings follow a logical order, so screen reader navigation makes sense",

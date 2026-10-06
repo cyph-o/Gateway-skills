@@ -13,7 +13,7 @@ import { careShowPlates } from "@/content/overlays";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
-  title: "Care Show — funded programmes for care providers",
+  title: "Care Show: funded programmes for care providers",
   description:
     "Two fully funded pathways for UK adult social care employers: strategic leadership " +
     "and service design, or AI & automation capability.",

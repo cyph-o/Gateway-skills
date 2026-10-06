@@ -28,7 +28,7 @@ function headerSafe(value: string): string {
 }
 
 export function leadNotificationSubject(data: LeadNotificationData): string {
-  return headerSafe(`New enquiry — ${data.companyName} — ${data.reference}`);
+  return headerSafe(`New enquiry: ${data.companyName} (${data.reference})`);
 }
 
 function rows(data: LeadNotificationData): [string, string][] {
@@ -44,7 +44,7 @@ function rows(data: LeadNotificationData): [string, string][] {
     ["Corporate email", data.email],
     ["Marketing consent", data.marketingConsent ? "Given" : "Not given"],
     ["Submitted", data.submittedAt.toISOString()],
-    ["Attribution", utm || "—"],
+    ["Attribution", utm || "None"],
   ];
 }
 
@@ -59,7 +59,7 @@ export function leadNotificationText(data: LeadNotificationData): string {
     "",
     data.marketingConsent
       ? "Marketing consent was given for this contact."
-      : "Marketing consent was NOT given. Respond to this enquiry only — do not add this contact to marketing lists.",
+      : "Marketing consent was NOT given. Respond to this enquiry only. Do not add this contact to marketing lists.",
   ].join("\n");
 }
 
@@ -76,7 +76,7 @@ export function leadNotificationHtml(data: LeadNotificationData): string {
 
   const consentNote = data.marketingConsent
     ? "Marketing consent was given for this contact."
-    : "Marketing consent was <strong>not</strong> given. Respond to this enquiry only &mdash; do not add this contact to marketing lists.";
+    : "Marketing consent was <strong>not</strong> given. Respond to this enquiry only. Do not add this contact to marketing lists.";
 
   return [
     `<div style="font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;background:#f4f7f3;padding:24px">`,

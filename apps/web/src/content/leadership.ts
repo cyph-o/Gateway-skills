@@ -14,7 +14,7 @@ export const leadershipHero = {
     "Elevating Strategic Leadership & Operational Transformation Across Your Care Organisation",
   standfirst:
     "A fully funded executive pathway combining a CMI Level 7 Diploma and Level 6 " +
-    "Service Designer qualification — tailored specifically to build operational " +
+    "Service Designer qualification, tailored specifically to build operational " +
     "capability, regulatory confidence, and long-term care excellence.",
 } as const;
 

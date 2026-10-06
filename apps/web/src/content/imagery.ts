@@ -74,7 +74,7 @@ export const automationImageSection = {
   points: [
     { text: "Automate rostering, data entry and document processing", icon: "workflow" },
     { text: "Build live compliance dashboards for multi-site oversight", icon: "layout-dashboard" },
-    { text: "Keep the capability — and the knowledge — in-house", icon: "cpu" },
+    { text: "Keep the capability, and the knowledge, in-house", icon: "cpu" },
   ] satisfies readonly ImageSectionPoint[],
 } as const;
 
@@ -83,7 +83,7 @@ export const automationProjectImageSection = {
   heading: "A working assistant, built inside your facility",
   body:
     "Every apprentice delivers a practical automation assistant addressing a real " +
-    "bottleneck in your service during their training — not a classroom exercise " +
+    "bottleneck in your service during their training, not a classroom exercise " +
     "written up afterwards.",
   points: [
     { text: "Care plan updates and review alerts", icon: "clipboard-list" },
