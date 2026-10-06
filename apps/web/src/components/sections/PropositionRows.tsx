@@ -1,12 +1,15 @@
 import { Container } from "@/components/layout/Container";
 import { Icon } from "@/components/primitives/Icon";
 import { SectionHeading } from "@/components/primitives/SectionHeading";
+import type { ReactNode } from "react";
 import type { Proposition, SectionHeader } from "@/content/types";
 
 interface PropositionRowsProps {
   header: SectionHeader;
   items: readonly Proposition[];
   tone?: "ground" | "surface";
+  /** Rendered between the heading and the rows. */
+  intro?: ReactNode;
 }
 
 /**
@@ -14,7 +17,7 @@ interface PropositionRowsProps {
  * Deliberately not three stacked cards — the rule-and-number rhythm is what
  * gives the page its institutional register.
  */
-export function PropositionRows({ header, items, tone = "ground" }: PropositionRowsProps) {
+export function PropositionRows({ header, items, tone = "ground", intro }: PropositionRowsProps) {
   return (
     <section
       className={`border-t border-line py-20 md:py-28 ${
@@ -23,6 +26,7 @@ export function PropositionRows({ header, items, tone = "ground" }: PropositionR
     >
       <Container>
         <SectionHeading {...header} />
+        {intro}
         <ol className="reveal-stagger mt-14">
           {items.map((item) => (
             <li

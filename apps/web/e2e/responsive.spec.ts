@@ -106,7 +106,7 @@ test("form controls meet touch-target and no-zoom minimums", async ({ page }) =>
     expect(fontSize, `${name} font size`).toBeGreaterThanOrEqual(16);
   }
 
-  const submit = page.getByRole("button", { name: /secure my funding audit/i });
+  const submit = page.locator('form button[type="submit"]');
   const submitBox = await submit.boundingBox();
   expect(submitBox!.height).toBeGreaterThanOrEqual(44);
 });

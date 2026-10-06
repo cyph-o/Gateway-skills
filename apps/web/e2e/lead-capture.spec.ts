@@ -48,7 +48,7 @@ test("submits an enquiry, persists it transactionally and confirms with a refere
   const email = uniqueEmail("happy");
   await page.goto("/care-show/leadership?utm_source=care_show&utm_medium=qr&utm_campaign=q4_2026");
   await fillForm(page, email);
-  await page.getByRole("button", { name: /secure my funding audit/i }).click();
+  await page.locator('form button[type="submit"]').click();
 
   await expect(page).toHaveURL(/\/enquiry-received\?ref=GSN-/);
   await expect(page.getByText(/GSN-/)).toBeVisible();
@@ -94,7 +94,7 @@ test("the same enquiry submitted twice yields one lead and one notification", as
   for (const attempt of [1, 2]) {
     await page.goto("/care-show/ai-automation");
     await fillForm(page, email);
-    await page.getByRole("button", { name: /secure my funding audit/i }).click();
+    await page.locator('form button[type="submit"]').click();
     await expect(page, `attempt ${attempt} should confirm`).toHaveURL(/\/enquiry-received/);
   }
 
@@ -118,7 +118,7 @@ test("rejects invalid input with field-level errors and keeps what was typed", a
   await page.selectOption("#employeeBand", "1-49");
   await page.selectOption("#levyPayer", "no");
   await page.waitForTimeout(MIN_FILL_MS + 300);
-  await page.getByRole("button", { name: /secure my funding audit/i }).click();
+  await page.locator('form button[type="submit"]').click();
 
   await expect(page.locator("#fullName-error")).toBeVisible();
   await expect(page.locator("#mobileNumber-error")).toBeVisible();
@@ -136,7 +136,7 @@ test("a bot that fills the honeypot is rejected and nothing is stored", async ({
     const field = document.querySelector<HTMLInputElement>("#company_website");
     if (field) field.value = "https://spam.example";
   });
-  await page.getByRole("button", { name: /secure my funding audit/i }).click();
+  await page.locator('form button[type="submit"]').click();
 
   await expect(page.locator('form [role="alert"]')).toContainText(/rejected/i);
   expect(await leadsByEmail(email)).toHaveLength(0);
@@ -153,7 +153,7 @@ test("submitting too quickly is rejected as mechanical", async ({ page }) => {
   await page.selectOption("#employeeBand", "50-249");
   await page.selectOption("#levyPayer", "no");
   // Deliberately no wait: under MIN_FILL_MS.
-  await page.getByRole("button", { name: /secure my funding audit/i }).click();
+  await page.locator('form button[type="submit"]').click();
 
   await expect(page.locator('form [role="alert"]')).toContainText(/rejected/i);
   expect(await leadsByEmail(email)).toHaveLength(0);

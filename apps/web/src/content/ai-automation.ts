@@ -91,7 +91,7 @@ export const aiProjectHeader: SectionHeader = {
   heading: "Training Becomes Practical Workplace Capability",
   standfirst:
     "The core differentiator of this apprenticeship is the Live Workplace " +
-    "Transformation Project. Your enrolled employee applies 100% of their learning to " +
+    "Transformation Project. Your enrolled employee applies all of their learning to " +
     "build a practical automation assistant directly inside your care facility during " +
     "their training.",
 };
@@ -135,21 +135,18 @@ export const aiFundingHeader: SectionHeader = {
 
 export const aiFunding: readonly FundingRoute[] = [
   {
-    label: "Apprenticeship Levy Payers",
-    headline: "100% covered",
+    label: "Levy-supported organisations",
+    headline: "Fully funded",
     detail:
-      "Fully covered through your organisation's existing digital Apprenticeship " +
-      "Service (DAS) levy accounts.",
+      "Funded in full through established workforce development frameworks, with no " +
+      "cost to the learner.",
   },
   {
-    label: "Non-Levy Employers (SMEs)",
-    headline: "95% government funded",
+    label: "Non-levy and LDSS-supported",
+    headline: "Government funded",
     detail:
-      "The remaining 5% is a one-off employer co-investment, invoiced on enrolment.",
-    figures: [
-      { label: "Full programme value", value: "£18,000" },
-      { label: "Employer contribution", value: "£900 + VAT" },
-    ],
+      "Substantial government funding applies. Your exact position is confirmed during a " +
+      "short eligibility check.",
   },
 ] as const;
 
@@ -159,7 +156,7 @@ export const aiFormCopy = {
   standfirst:
     "Identify your high-potential administrators, team leaders, or operations staff " +
     "today. Our senior automation advisers will assess your levy eligibility.",
-  submitLabel: "Secure My Funding Audit",
+  submitLabel: "Review My Funding Position",
 } as const;
 
 export const aiClosing = {

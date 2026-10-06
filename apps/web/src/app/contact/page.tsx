@@ -8,8 +8,8 @@ import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata({
   title: "Contact",
   description:
-    "Contact Gateway Skills Network to assess your apprenticeship levy eligibility and " +
-    "book an introductory funding check.",
+    "Contact Gateway Skills Network to confirm your funding position and book an " +
+    "introductory eligibility check.",
   path: "/contact",
 });
 
@@ -18,7 +18,7 @@ export default function ContactPage() {
     <>
       <PageHero
         eyebrow="Contact"
-        headline="Assess your levy eligibility and book a funding check"
+        headline="Confirm your funding position and book an eligibility check"
         standfirst={
           "Tell us who you are and which organisation you represent. A senior adviser " +
           "will come back to you directly. There is no automated sequence and no " +

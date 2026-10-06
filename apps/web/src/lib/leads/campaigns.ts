@@ -12,6 +12,10 @@ export const CAMPAIGNS = {
     label: "Care Show: AI & Automation Practitioner",
     programme: "AI & Automation",
   },
+  programme_frontline: {
+    label: "Website — Frontline Care Worker & Operational Manager",
+    programme: "Frontline",
+  },
   programme_leadership: {
     label: "Website: Strategic Leadership & Service Design",
     programme: "Leadership",

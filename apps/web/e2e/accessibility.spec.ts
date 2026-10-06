@@ -63,7 +63,7 @@ test("the enquiry form is fully operable by keyboard alone", async ({ page }) =>
   await page.keyboard.press("Space");
   await expect(page.locator("#marketingConsent")).toBeChecked();
 
-  const submit = page.getByRole("button", { name: /secure my funding audit/i });
+  const submit = page.locator('form button[type="submit"]');
   await submit.focus();
   await expect(submit).toBeFocused();
 });

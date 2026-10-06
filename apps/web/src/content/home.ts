@@ -2,11 +2,13 @@ import type { IconName, Proposition, SectionHeader } from "./types";
 
 export const homeHero = {
   eyebrow: "Gateway Skills Network Ltd · Connecting Business to Future Skills",
-  headline: "Transform Your Care Service Performance with 95%–100% Government Funding.",
+  headline:
+    "Unlock fully funded leadership, automation and workforce development, built " +
+    "exclusively for adult social care.",
   standfirst:
-    "Gateway Skills Network connects adult social care providers with elite, " +
-    "Ofsted-regulated training matrices to deliver fully subsidised frontline workforce, " +
-    "operational automation, and management leadership pathways.",
+    "We match care providers with Ofsted-regulated training partners to deliver fully " +
+    "funded leadership, automation and frontline development, improving performance, " +
+    "retention and inspection outcomes.",
 } as const;
 
 export const trustBanner =
@@ -40,7 +42,7 @@ export const programmeCards: readonly ProgrammeCard[] = [
       "frameworks.",
     icon: "heart-handshake",
     href: "/programmes/frontline",
-    fundingTag: "100% government funded programmes",
+    fundingTag: "Fully funded programmes",
   },
   {
     title: "Strategic Care Leadership & Service Design Pathway",
@@ -64,9 +66,9 @@ export const programmeCards: readonly ProgrammeCard[] = [
   {
     title: "Level 4 AI Automation Practitioner Programme",
     body:
-      "Upskill care coordinators, administrators, or rota managers to build custom " +
-      "digital workflows. Saves hours of manual desk overhead by automating care logs, " +
-      "rota scheduling, and compliance data tracking.",
+      "A Level 4 programme that teaches coordinators and administrators how to automate " +
+      "repetitive tasks, freeing 5 to 10 hours per week and reducing admin bottlenecks " +
+      "across care logs, rota scheduling and compliance tracking.",
     icon: "cpu",
     href: "/programmes/ai-automation",
   },
@@ -79,6 +81,16 @@ export const connectorHeader: SectionHeader = {
     "We are an independent B2B managing agent and broker, not a training provider. We " +
     "analyse your workforce needs and connect you to the right accredited delivery.",
 };
+
+export const whyGateway = {
+  heading: "Why Gateway",
+  body:
+    "We operate as an independent consultancy, not a training provider. Employers choose " +
+    "Gateway because we remove the complexity of funding, accreditation and programme " +
+    "selection. Our managed network ensures every pathway is delivered by authorised, " +
+    "government-funded partners, while our advisory team aligns each programme to your " +
+    "operational, regulatory and workforce priorities.",
+} as const;
 
 export const connectorPoints: readonly Proposition[] = [
   {

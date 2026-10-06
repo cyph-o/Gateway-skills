@@ -13,7 +13,7 @@ import { careShowPlates } from "@/content/overlays";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
-  title: "Care Show: funded programmes for care providers",
+  title: "Care Show: Funded Care Programmes",
   description:
     "Two fully funded pathways for UK adult social care employers: strategic leadership " +
     "and service design, or AI & automation capability.",
@@ -65,9 +65,9 @@ export default function CareShowHubPage() {
 
       <ClosingCta
         heading="Not sure which pathway fits?"
-        body="Speak to a senior adviser at the stand, or send us your details and we will assess your levy position across both programmes."
+        body="Speak to a senior adviser at the stand, or send us your details and we will confirm the funding available across both pathways."
         ctaHref="/care-show/leadership#register"
-        ctaLabel="Secure My Funding Audit"
+        ctaLabel="Review My Funding Position"
       />
     </>
   );

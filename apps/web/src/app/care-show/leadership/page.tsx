@@ -27,7 +27,7 @@ import { bandImages, careShowPlates } from "@/content/overlays";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
-  title: "Strategic Leadership & Service Design for Social Care",
+  title: "Care Leadership Pathway, 95-100% Funded",
   description:
     "A fully funded executive pathway combining a CMI Level 7 Diploma and Level 6 " +
     "Service Design qualification for UK care organisations.",
@@ -93,7 +93,7 @@ export default function CareShowLeadershipPage() {
 
       <ClosingCta
         heading="Confirm your Q4 funding position"
-        body="A senior adviser will assess your levy account and confirm which funded cohort your organisation qualifies for."
+        body="A senior adviser will confirm the funding your organisation qualifies for and which cohort fits your service."
         ctaHref="#register"
         ctaLabel={leadershipFormCopy.submitLabel}
       />

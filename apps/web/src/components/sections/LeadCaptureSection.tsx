@@ -47,6 +47,10 @@ export function LeadCaptureSection({
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-on-forest-muted">
               {standfirst}
             </p>
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-on-forest-muted">
+              We only need a few details to confirm your funding position and the pathways
+              your organisation qualifies for.
+            </p>
             <ul className="mt-9 space-y-4">
               {assurances.map((item) => (
                 <li key={item} className="flex gap-3 text-on-forest-muted">

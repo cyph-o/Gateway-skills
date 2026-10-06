@@ -5,11 +5,10 @@ import { brand } from "./brand";
  * abridge this statement — it is a compliance disclosure, not marketing copy.
  */
 export const corporateStatement =
-  "Gateway Skills Network Ltd is a registered UK company operating as an " +
-  "independent B2B workforce recruitment and strategic educational consultancy " +
-  "framework. All higher-level qualifications are delivered exclusively via our " +
-  "authorised, government-funded college network partners and ESFA registered " +
-  "training providers.";
+  "Gateway Skills Network Ltd is a registered UK company providing independent workforce " +
+  "and education consultancy. All programmes are delivered through authorised and " +
+  "government-funded training partners operating within the UK's regulated " +
+  "apprenticeship and higher-education frameworks.";
 
 export const footerContact = {
   heading: "Speak to a senior adviser",

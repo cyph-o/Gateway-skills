@@ -47,7 +47,7 @@ export const leadershipFormCopy = {
   standfirst:
     "Four details are all we need to assess your levy position and confirm " +
     "which funded cohort your organisation qualifies for.",
-  submitLabel: "Secure My Funding Audit",
+  submitLabel: "Review My Funding Position",
 } as const;
 
 export const leadershipPropositionsHeader: SectionHeader = {
@@ -91,20 +91,17 @@ export const leadershipFundingHeader: SectionHeader = {
 
 export const leadershipFunding: readonly FundingRoute[] = [
   {
-    label: "Apprenticeship Levy Payers",
-    headline: "100% covered",
+    label: "Levy-supported organisations",
+    headline: "Fully funded",
     detail:
-      "Fully covered through your organisation's existing digital Apprenticeship " +
-      "Service (DAS) levy accounts.",
+      "Funded in full through established workforce development frameworks, with no " +
+      "cost to the learner.",
   },
   {
-    label: "Non-Levy Employers (SMEs)",
-    headline: "95% government funded",
+    label: "Non-levy and LDSS-supported",
+    headline: "Government funded",
     detail:
-      "The balance is a one-off employer co-investment, invoiced on enrolment.",
-    figures: [
-      { label: "Full programme value", value: "£15,000" },
-      { label: "Employer contribution", value: "£750 + VAT" },
-    ],
+      "Substantial government funding applies. Your exact position is confirmed during a " +
+      "short eligibility check.",
   },
 ] as const;

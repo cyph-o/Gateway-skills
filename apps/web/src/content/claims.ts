@@ -41,8 +41,11 @@ export const claims = {
     text:
       "Levy transfer: 100% government funded. Transfers may be available for eligible " +
       "employers.",
-    status: "approved",
-    note: "Matches the wording on Gateway's own programme flyer.",
+    status: "pending-signoff",
+    note:
+      "Withdrawn from the public site at Gateway's request: levy mechanics, percentages " +
+      "and employer contributions are commercial detail for the eligibility conversation, " +
+      "not the website.",
   },
   charteredPathway: {
     id: "chartered-pathway",

@@ -20,8 +20,8 @@ export const careShowRoutesHeader: SectionHeader = {
   index: "Choose your pathway",
   heading: "Two programmes, both government funded",
   standfirst:
-    "Levy payers are fully covered through existing DAS accounts. Non-levy employers " +
-    "pay a 5% co-investment.",
+    "Substantial government funding is available across both pathways. Your exact " +
+    "position is confirmed during a short eligibility check.",
 };
 
 export interface CareShowRoute {
@@ -41,8 +41,8 @@ export const careShowRoutes: readonly CareShowRoute[] = [
     body:
       "An executive pathway combining a CMI Level 7 Diploma and Level 6 Service Designer " +
       "qualification, aligned to the CQC Single Assessment Framework.",
-    figure: "£750 + VAT",
-    figureLabel: "Employer contribution (non-levy)",
+    figure: "Fully funded",
+    figureLabel: "For eligible employers",
   },
   {
     href: "/care-show/ai-automation",
@@ -51,7 +51,7 @@ export const careShowRoutes: readonly CareShowRoute[] = [
     body:
       "Train your existing coordinators, administrators and team leaders to automate " +
       "care administration and build live compliance dashboards.",
-    figure: "£900 + VAT",
-    figureLabel: "Employer contribution (non-levy)",
+    figure: "Fully funded",
+    figureLabel: "For eligible employers",
   },
 ] as const;

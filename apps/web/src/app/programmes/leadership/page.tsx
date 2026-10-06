@@ -1,4 +1,5 @@
 import { ButtonLink } from "@/components/primitives/Button";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { ClosingCta } from "@/components/sections/ClosingCta";
 import { CqcOutcomes } from "@/components/sections/CqcOutcomes";
 import { EligibilityPanel } from "@/components/sections/EligibilityPanel";
@@ -40,9 +41,10 @@ import {
 import { careImageSection, leadershipImageSection, photos } from "@/content/imagery";
 import { careShowPlates } from "@/content/overlays";
 import { pageMetadata } from "@/lib/metadata";
+import { breadcrumbSchema, programmeSchema } from "@/lib/structured-data";
 
 export const metadata = pageMetadata({
-  title: "Strategic Leadership & Service Design for Social Care",
+  title: "Care Leadership & Service Design Pathway",
   description:
     "CMI Level 7 Diploma in Strategic Management and Leadership Practice with a Level 6 " +
     "Service Designer qualification, fully funded for eligible UK care employers.",
@@ -52,6 +54,22 @@ export const metadata = pageMetadata({
 export default function LeadershipProgrammePage() {
   return (
     <>
+      <JsonLd
+        data={programmeSchema({
+          name: "Strategic Care Leadership & Service Design Pathway",
+          description:
+            "A dual-qualification pathway combining a Level 6 Service Designer framework with an embedded Level 7 Diploma in Strategic Management and Leadership Practice, fully funded for eligible UK care employers.",
+          path: "/programmes/leadership",
+        })}
+      />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Programmes", path: "/#programmes" },
+          { name: "Leadership & Service Design", path: "/programmes/leadership" },
+        ])}
+      />
+
       <PageHero
         plates={careShowPlates}
         eyebrow={leadershipProgrammeHero.eyebrow}
@@ -114,8 +132,8 @@ export default function LeadershipProgrammePage() {
       <LeadCaptureSection
         index="Enrolment"
         heading="Book a funding audit"
-        standfirst="We confirm your levy position and the cohorts your organisation qualifies for."
-        submitLabel="Secure My Funding Audit"
+        standfirst="We confirm the funding your organisation qualifies for and which cohort fits your service."
+        submitLabel="Review My Funding Position"
         campaign="programme_leadership"
       />
 
@@ -123,7 +141,7 @@ export default function LeadershipProgrammePage() {
         heading="Build the leaders behind outstanding care"
         body="Identify high-potential leaders across your homes and services today, and we will handle the funding route."
         ctaHref="#register"
-        ctaLabel="Secure My Funding Audit"
+        ctaLabel="Review My Funding Position"
       />
     </>
   );

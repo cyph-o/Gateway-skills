@@ -30,7 +30,7 @@ import { bandImages, careShowPlates } from "@/content/overlays";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
-  title: "AI & Automation Practitioner for Care Organisations",
+  title: "AI & Automation for Care, Fully Funded",
   description:
     "A Level 4 AI & Automation Practitioner framework that trains your existing care " +
     "staff to automate administration and build live compliance dashboards.",

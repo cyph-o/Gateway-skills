@@ -7,17 +7,23 @@ import { PathwayFlow } from "@/components/sections/PathwayFlow";
 import { LeadCaptureSection } from "@/components/sections/LeadCaptureSection";
 import { OverlaySection } from "@/components/sections/OverlaySection";
 import { PageHero } from "@/components/sections/PageHero";
+import { FundingOverview } from "@/components/sections/FundingOverview";
 import { PropositionRows } from "@/components/sections/PropositionRows";
 import { ProgrammeSummary } from "@/components/sections/ProgrammeSummary";
 import { brand } from "@/content/brand";
-import { capabilityHeader, connectorHeader, connectorPoints, homeHero, programmeCards } from "@/content/home";
+import {
+  capabilityHeader,
+  connectorHeader,
+  connectorPoints,
+  homeHero,
+  programmeCards,
+  whyGateway,
+} from "@/content/home";
 import { aiPillars } from "@/content/ai-automation";
 import { leadershipPropositions } from "@/content/leadership";
 import {
   automationOverlay,
   careOverlay,
-  fundingOverlay,
-  fundingStats,
   heroPlates,
   leadershipOverlay,
   overlayImages,
@@ -62,7 +68,17 @@ export default function HomePage() {
 
       <LogoWall />
 
-      <PropositionRows header={connectorHeader} items={connectorPoints} tone="surface" />
+      <PropositionRows
+        header={connectorHeader}
+        items={connectorPoints}
+        tone="surface"
+        intro={
+          <div className="reveal mt-10 max-w-3xl border-l-2 border-emerald pl-6">
+            <h3 className="text-2xl">{whyGateway.heading}</h3>
+            <p className="mt-3 leading-relaxed text-ink-muted">{whyGateway.body}</p>
+          </div>
+        }
+      />
 
       <PathwayFlow />
 
@@ -111,15 +127,7 @@ export default function HomePage() {
         tone="ground"
       />
 
-      <OverlaySection
-        id="funding"
-        eyebrow={fundingOverlay.eyebrow}
-        heading={fundingOverlay.heading}
-        body={fundingOverlay.body}
-        image={overlayImages.funding}
-        stats={fundingStats}
-        tone="light"
-      />
+      <FundingOverview />
 
       <OverlaySection
         id="why"
@@ -134,8 +142,8 @@ export default function HomePage() {
         id="enquire"
         index="Enquiry"
         heading="Check your funding eligibility"
-        standfirst="Four details are all we need to assess your levy position and the cohorts your organisation qualifies for."
-        submitLabel="Secure My Funding Audit"
+        standfirst="A few details are all we need to confirm your funding position and the pathways your organisation qualifies for."
+        submitLabel="Review My Funding Position"
         campaign="general_contact"
       />
     </>

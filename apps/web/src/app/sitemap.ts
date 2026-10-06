@@ -5,6 +5,7 @@ import { siteUrl } from "@/content/brand";
  *  evergreen programme pages, so indexing both would split ranking signals. */
 const ROUTES = [
   { path: "/", priority: 1 },
+  { path: "/programmes/frontline", priority: 0.9 },
   { path: "/programmes/leadership", priority: 0.9 },
   { path: "/programmes/ai-automation", priority: 0.9 },
   { path: "/care-show", priority: 0.7 },

@@ -21,6 +21,14 @@ export const clientLogos: readonly ClientLogo[] = [
   { name: "Skills for Care", src: "/images/logos/skills-for-care.webp" },
 ] as const;
 
+export const logoWallHeader = {
+  eyebrow: "Track record",
+  heading: "Where our leadership team has worked",
+  standfirst:
+    "Experience across care, the NHS, local government, global consulting and regulated " +
+    "training providers.",
+} as const;
+
 export const logoWallNote =
   "Organisations our leadership team has engaged with across their professional " +
   "careers. Inclusion does not imply partnership with, or endorsement of, Gateway " +

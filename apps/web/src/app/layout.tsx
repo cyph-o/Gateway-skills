@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Hanken_Grotesk, IBM_Plex_Mono, Newsreader } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { organisationSchema } from "@/lib/structured-data";
 import { brand, siteUrl } from "@/content/brand";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
@@ -33,14 +35,21 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl()),
   title: {
     default: `${brand.legalName} | ${brand.strapline}`,
-    template: `%s | ${brand.legalName}`,
+    template: `%s | Gateway Skills`,
   },
   description:
     "Fully funded higher-level qualifications in strategic leadership, service " +
     "transformation, and AI & automation for UK care organisations.",
   applicationName: brand.legalName,
   authors: [{ name: brand.legalName }],
-  formatDetection: { telephone: false },
+  creator: brand.legalName,
+  publisher: brand.legalName,
+  // The footer lists a real number we want tappable, so leave telephone
+  // detection on rather than suppressing it site-wide.
+  formatDetection: { telephone: true, address: false, email: false },
+  alternates: { canonical: siteUrl() },
+  robots: { index: true, follow: true },
+  category: "education",
 };
 
 export const viewport: Viewport = {
@@ -61,6 +70,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />
+        <JsonLd data={organisationSchema()} />
         <RevealEngine />
         <Analytics />
       </body>

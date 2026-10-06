@@ -1,4 +1,3 @@
-import type { OverlayStat } from "@/components/sections/OverlaySection";
 
 /** Background plates for the full-bleed overlay sections. */
 export const overlayImages = {
@@ -45,18 +44,14 @@ export const automationOverlay = {
 } as const;
 
 export const fundingOverlay = {
-  eyebrow: "Government co-investment",
-  heading: "Most employers pay a fraction of the programme value",
+  eyebrow: "Government funding",
+  heading: "Substantial government funding for eligible employers",
   body:
-    "Levy payers are fully covered through existing DAS accounts. Non-levy employers " +
-    "contribute 5%, invoiced on enrolment.",
+    "Funding is available through established apprenticeship and workforce development " +
+    "frameworks. We confirm exactly what your organisation qualifies for before any " +
+    "commitment is made.",
 } as const;
 
-export const fundingStats: readonly OverlayStat[] = [
-  { value: "100%", label: "Covered for levy payers" },
-  { value: "95%", label: "Government funded for SMEs" },
-  { value: "£750", label: "From, plus VAT, to enrol" },
-] as const;
 
 export const careOverlay = {
   eyebrow: "Why it matters",

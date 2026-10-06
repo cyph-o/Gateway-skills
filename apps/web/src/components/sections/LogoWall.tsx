@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Container } from "@/components/layout/Container";
-import { clientLogos, logoWallNote } from "@/content/logos";
+import { SectionHeading } from "@/components/primitives/SectionHeading";
+import { clientLogos, logoWallHeader, logoWallNote } from "@/content/logos";
 
 /**
  * Client logo grid in uniform greyscale. Logos are supplied by Gateway; the
@@ -10,7 +11,8 @@ export function LogoWall() {
   return (
     <section className="border-t border-line bg-surface py-14 md:py-20">
       <Container>
-        <ul className="reveal-stagger grid grid-cols-2 items-center gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
+        <SectionHeading {...logoWallHeader} />
+        <ul className="mt-12 reveal-stagger grid grid-cols-2 items-center gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
           {clientLogos.map((logo) => (
             <li key={logo.name} className="flex items-center justify-center">
               <Image

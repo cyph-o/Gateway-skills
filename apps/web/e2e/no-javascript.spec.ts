@@ -38,7 +38,7 @@ test("submits an enquiry with JavaScript disabled", async ({ page }) => {
   await page.fill("#email", address);
   await page.selectOption("#employeeBand", "1-49");
   await page.selectOption("#levyPayer", "no");
-  await page.getByRole("button", { name: /secure my funding audit/i }).click();
+  await page.locator('form button[type="submit"]').click();
 
   await expect(page).toHaveURL(/\/enquiry-received\?ref=GSN-/);
 
@@ -62,7 +62,7 @@ test("still deduplicates a repeated no-JavaScript submission", async ({ page }) 
     await page.fill("#email", address);
     await page.selectOption("#employeeBand", "1-49");
     await page.selectOption("#levyPayer", "unsure");
-    await page.getByRole("button", { name: /secure my funding audit/i }).click();
+    await page.locator('form button[type="submit"]').click();
     await expect(page, `attempt ${attempt}`).toHaveURL(/\/enquiry-received/);
   }
 
@@ -80,7 +80,7 @@ test("validation errors still render without JavaScript", async ({ page }) => {
   await page.fill("#email", "also-nope");
   await page.selectOption("#employeeBand", "1-49");
   await page.selectOption("#levyPayer", "no");
-  await page.getByRole("button", { name: /secure my funding audit/i }).click();
+  await page.locator('form button[type="submit"]').click();
 
   await expect(page.locator("#mobileNumber-error")).toBeVisible();
   await expect(page.locator("#email-error")).toBeVisible();
