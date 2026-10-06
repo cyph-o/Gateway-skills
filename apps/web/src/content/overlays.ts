@@ -24,7 +24,7 @@ export const heroOverlay = {
   eyebrow: "Gateway Skills Network Ltd",
   heading: "Connecting Business to Future Skills",
   body:
-    "Fully funded, higher-level qualifications for UK care organisations — delivered " +
+    "Fully funded, higher-level qualifications for UK care organisations, delivered " +
     "through our authorised college network and ESFA registered training partners.",
 } as const;
 

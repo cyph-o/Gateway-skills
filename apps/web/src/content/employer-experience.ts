@@ -22,7 +22,7 @@ export const employerExperienceBody = [
     "1,000+ employers across a wide range of sectors, helping organisations identify " +
     "skills needs and access apprenticeships, professional training and workforce " +
     "development opportunities.",
-  "That experience is now brought together through Gateway Skills Network — connecting " +
+  "That experience is now brought together through Gateway Skills Network, connecting " +
     "businesses with the future skills, programmes and specialist training partners they " +
     "need to develop their people and transform their organisations.",
 ] as const;

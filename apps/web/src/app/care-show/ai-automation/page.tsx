@@ -82,7 +82,7 @@ export default function CareShowAiAutomationPage() {
       <OverlaySection
         eyebrow="The live project"
         heading="A working assistant, built inside your facility"
-        body="Every apprentice delivers a practical automation assistant addressing a real bottleneck in your service during their training — not a classroom exercise written up afterwards."
+        body="Every apprentice delivers a practical automation assistant addressing a real bottleneck in your service during their training, not a classroom exercise written up afterwards."
         image={bandImages.desk}
       />
 
