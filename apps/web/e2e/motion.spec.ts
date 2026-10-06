@@ -21,14 +21,20 @@ test.describe("in-page anchors glide to their section", () => {
     await page.goto("/care-show/leadership");
 
     const form = page.locator("#register");
-    await expect(form).not.toBeInViewport();
+
+    // Assert the page actually travelled, rather than that the target starts
+    // fully off-screen: the hero is short enough now that #register can already
+    // be a pixel or two into view, which made that precondition flaky.
+    const before = await page.evaluate(() => window.scrollY);
+    expect(before).toBe(0);
 
     // The hero CTA is an in-page anchor, not a navigation.
     await page.locator('a[href="#register"]').first().click();
     await expect(page).toHaveURL(/#register$/);
 
     // Allow the glide to finish, then confirm it actually arrived.
-    await expect(form).toBeInViewport({ timeout: 5000 });
+    await expect(form).toBeInViewport({ ratio: 0.3, timeout: 6000 });
+    expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(before);
   });
 
   test("the landed section clears the sticky header", async ({ page }) => {
