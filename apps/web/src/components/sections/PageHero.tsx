@@ -58,19 +58,19 @@ export function PageHero({
       ) : null}
 
       <Container
-        className={photographic ? "pt-20 pb-16 md:pt-28 md:pb-24" : "pt-16 pb-14 md:pt-24 md:pb-20"}
+        className={photographic ? "pt-12 pb-12 md:pt-16 md:pb-16" : "pt-16 pb-14 md:pt-24 md:pb-20"}
       >
         <div
           className={
             photographic
-              ? "max-w-3xl"
+              ? "max-w-4xl"
               : "grid items-start gap-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-16"
           }
         >
           <div className="hero-enter">
             <Eyebrow className={dark ? "text-emerald-lift" : ""}>{eyebrow}</Eyebrow>
             <h1
-              className={`mt-6 text-display-xl ${photographic ? "text-white" : ""}`}
+              className={`mt-5 text-display-xl text-balance ${photographic ? "text-white" : ""}`}
             >
               {headline}
             </h1>
@@ -78,13 +78,13 @@ export function PageHero({
               // Brighter than the usual muted tone on photographic heroes: at
               // phone width the scrim gradient compresses and the copy reaches
               // its lighter end, which drops the muted tone just below AA.
-              className={`mt-7 max-w-2xl text-lg leading-relaxed md:text-xl ${
+              className={`mt-5 max-w-2xl leading-relaxed md:text-lg ${
                 photographic ? "text-mist" : dark ? "text-on-forest-muted" : "text-ink-muted"
               }`}
             >
               {standfirst}
             </p>
-            {actions ? <div className="mt-9 flex flex-wrap gap-3">{actions}</div> : null}
+            {actions ? <div className="mt-7 flex flex-wrap gap-3">{actions}</div> : null}
           </div>
 
           {photographic ? null : (
@@ -96,7 +96,7 @@ export function PageHero({
           )}
         </div>
 
-        {footer ? <div className="reveal mt-14 md:mt-20">{footer}</div> : null}
+        {footer ? <div className="reveal mt-10 md:mt-12">{footer}</div> : null}
       </Container>
     </section>
   );

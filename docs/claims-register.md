@@ -54,6 +54,24 @@ right to work, operational care role, not already on another funded
 apprenticeship). Eligibility is stated as criteria confirmed during the funding
 audit, not as a guarantee.
 
+## Testimonials — ATTRIBUTION OUTSTANDING
+
+Five client quotes are published on the homepage at Gateway's instruction.
+They were supplied labelled by programme area, not by named client, so they
+render with the programme as context and **no invented attribution**.
+
+Under the CAP Code a testimonial must be genuine and the advertiser must hold
+documentary evidence of it. Two things are outstanding:
+
+1. **Written permission** from each client to publish their feedback.
+2. **Named attribution** (person, role, organisation). `Testimonial` in
+   `src/content/testimonials.ts` already carries optional `name` and
+   `organisation` fields; filling them in is the only change needed.
+
+Until then the quotes are unattributed, which is weaker evidentially and less
+persuasive to a reader. Note this reverses the earlier instruction that Gateway
+does not use customer reviews.
+
 ## Still to confirm before launch
 
 - Company registration number, registered address and ICO registration number

@@ -24,7 +24,7 @@ Tick these against the **deployed** site, not localhost.
 - [ ] Privacy notice approved; retention period supplied
 - [ ] Company registration number, registered address, ICO number added
 - [ ] PECR decision: is the mobile number used for marketing, or enquiry only?
-- [ ] Confirmed there is no testimonials section anywhere (there is not)
+- [ ] Testimonials: written permission and named attribution obtained (see claims-register.md)
 - [ ] Corporate statement reproduced verbatim in the footer
 
 ## Verified in this build

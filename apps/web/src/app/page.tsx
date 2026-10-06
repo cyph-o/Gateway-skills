@@ -1,6 +1,7 @@
 import { ButtonLink } from "@/components/primitives/Button";
 import { LogoWall } from "@/components/sections/LogoWall";
 import { ProgrammeCards } from "@/components/sections/ProgrammeCards";
+import { Testimonials } from "@/components/sections/Testimonials";
 import { TrustBanner } from "@/components/sections/TrustBanner";
 import { EmployerExperience } from "@/components/sections/EmployerExperience";
 import { PathwayFlow } from "@/components/sections/PathwayFlow";
@@ -137,6 +138,8 @@ export default function HomePage() {
         image={overlayImages.care}
         tone="light"
       />
+
+      <Testimonials />
 
       <LeadCaptureSection
         id="enquire"

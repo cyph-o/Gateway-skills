@@ -153,3 +153,29 @@ test("the mobile menu opens wherever the visitor has scrolled to", async ({ page
     await expect(panel).toBeHidden();
   }
 });
+
+/**
+ * The hero is the first thing a QR-code visitor sees. If the call to action is
+ * below the fold on load, the page has failed before it started — which is
+ * exactly what happened when the headline copy grew to ~100 characters and the
+ * display scale was still tuned for a short one.
+ */
+const FOLD_CASES = [
+  { label: "laptop", width: 1280, height: 700 },
+  { label: "desktop", width: 1440, height: 820 },
+  { label: "tablet", width: 834, height: 1050 },
+  { label: "phone", width: 390, height: 730 },
+];
+
+for (const route of ["/", "/care-show/leadership"]) {
+  test(`${route}: the hero call to action is above the fold on every screen`, async ({ page }) => {
+    for (const { label, width, height } of FOLD_CASES) {
+      await page.setViewportSize({ width, height });
+      await page.goto(route, { waitUntil: "load" });
+      await page.waitForTimeout(300);
+
+      const cta = page.locator("section").first().getByRole("link").first();
+      await expect(cta, `${route} CTA on ${label}`).toBeInViewport();
+    }
+  });
+}
