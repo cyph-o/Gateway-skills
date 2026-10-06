@@ -40,3 +40,6 @@ test-results/
 *.log
 npm-debug.log*
 yarn-error.log*
+
+# typescript build cache
+*.tsbuildinfo
