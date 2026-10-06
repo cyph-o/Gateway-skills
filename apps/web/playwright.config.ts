@@ -5,6 +5,14 @@ import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
   testDir: "./e2e",
   fullyParallel: true,
+  // These drive real browsers, submit real forms and hit a real database. The
+  // 30s default is tight for that, and on a loaded machine it was expiring
+  // mid-flight on tests that pass comfortably in isolation.
+  timeout: 60_000,
+  expect: { timeout: 10_000 },
+  // Capped rather than CPU-derived: oversubscribing a memory-constrained
+  // machine makes every test slower and turns timeouts into false failures.
+  workers: process.env.CI ? 2 : 4,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? "github" : [["list"]],

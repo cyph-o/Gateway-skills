@@ -161,10 +161,12 @@ test("the mobile menu opens wherever the visitor has scrolled to", async ({ page
  * display scale was still tuned for a short one.
  */
 const FOLD_CASES = [
-  { label: "laptop", width: 1280, height: 700 },
   { label: "desktop", width: 1440, height: 820 },
+  { label: "laptop", width: 1280, height: 700 },
+  { label: "short laptop", width: 1280, height: 620 },
   { label: "tablet", width: 834, height: 1050 },
   { label: "phone", width: 390, height: 730 },
+  { label: "small phone", width: 375, height: 600 },
 ];
 
 for (const route of ["/", "/care-show/leadership"]) {
@@ -179,3 +181,20 @@ for (const route of ["/", "/care-show/leadership"]) {
     }
   });
 }
+
+test("the hero owns the first screen: nothing below it peeks above the fold", async ({ page }) => {
+  for (const { label, width, height } of FOLD_CASES) {
+    await page.setViewportSize({ width, height });
+    await page.goto("/", { waitUntil: "load" });
+    await page.waitForTimeout(300);
+
+    // The trust banner is the first thing after the hero. If any of it shows
+    // on load it competes with the headline for the opening impression.
+    const banner = page.getByText(/^Delivering High-Impact Professional Development/);
+    await expect(banner, `trust banner must stay below the fold on ${label}`).not.toBeInViewport();
+
+    // ...without pushing the call to action off-screen to achieve it.
+    const cta = page.locator("section").first().getByRole("link").first();
+    await expect(cta, `hero CTA on ${label}`).toBeInViewport();
+  }
+});

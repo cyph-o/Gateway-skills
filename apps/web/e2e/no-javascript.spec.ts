@@ -12,6 +12,14 @@ import { closeDb, deleteLeadsByEmail, leadsByEmail, outboxForLead, resetRateLimi
  */
 test.use({ javaScriptEnabled: false });
 test.describe.configure({ mode: "serial" });
+/**
+ * A distinct client IP for this spec. The rate limiter keys on
+ * x-forwarded-for, so without this the submission specs share one bucket and
+ * trip the per-IP limit when they run in parallel — a test-environment
+ * collision, not a product fault. Giving each spec its own address isolates
+ * them and exercises the per-IP keying for real.
+ */
+test.use({ extraHTTPHeaders: { "x-forwarded-for": "203.0.113.22" } });
 
 test.beforeEach(async () => {
   await resetRateLimits();

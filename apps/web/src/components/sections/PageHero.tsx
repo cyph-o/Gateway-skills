@@ -36,8 +36,16 @@ export function PageHero({
   return (
     <section
       data-surface={dark ? "forest" : undefined}
+      // A photographic hero fills the first screen, so nothing from the next
+      // section peeks above the fold and competes with it. `svh`, not `dvh`:
+      // dvh grows as a mobile browser hides its URL bar, which would resize
+      // the hero mid-scroll. 4.5rem is the sticky header.
       className={`relative isolate overflow-hidden ${
-        photographic ? "bg-forest-deep" : tone === "forest" ? "bg-forest" : "bg-ground"
+        photographic
+          ? "flex min-h-[calc(100svh-4.5rem)] items-center bg-forest-deep"
+          : tone === "forest"
+            ? "bg-forest"
+            : "bg-ground"
       }`}
     >
       {photographic ? (
@@ -58,7 +66,9 @@ export function PageHero({
       ) : null}
 
       <Container
-        className={photographic ? "pt-12 pb-12 md:pt-16 md:pb-16" : "pt-16 pb-14 md:pt-24 md:pb-20"}
+        className={
+          photographic ? "w-full py-12 md:py-16" : "pt-16 pb-14 md:pt-24 md:pb-20"
+        }
       >
         <div
           className={

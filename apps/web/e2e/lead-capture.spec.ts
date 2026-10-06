@@ -21,6 +21,14 @@ const FILLED = {
 };
 
 test.describe.configure({ mode: "serial" });
+/**
+ * A distinct client IP for this spec. The rate limiter keys on
+ * x-forwarded-for, so without this the submission specs share one bucket and
+ * trip the per-IP limit when they run in parallel — a test-environment
+ * collision, not a product fault. Giving each spec its own address isolates
+ * them and exercises the per-IP keying for real.
+ */
+test.use({ extraHTTPHeaders: { "x-forwarded-for": "203.0.113.11" } });
 
 test.beforeEach(async () => {
   await resetRateLimits();
@@ -152,7 +160,15 @@ test("submitting too quickly is rejected as mechanical", async ({ page }) => {
   await page.fill("#email", email);
   await page.selectOption("#employeeBand", "50-249");
   await page.selectOption("#levyPayer", "no");
-  // Deliberately no wait: under MIN_FILL_MS.
+
+  // Reset the render stamp immediately before submitting. Filling this form
+  // now takes longer than MIN_FILL_MS on a loaded machine, so relying on the
+  // test itself being fast was flaky. This exercises the server-side timing
+  // guard directly and deterministically.
+  await page.evaluate(() => {
+    const stamp = document.querySelector<HTMLInputElement>('input[name="renderedAt"]');
+    if (stamp) stamp.value = String(Date.now());
+  });
   await page.locator('form button[type="submit"]').click();
 
   await expect(page.locator('form [role="alert"]')).toContainText(/rejected/i);

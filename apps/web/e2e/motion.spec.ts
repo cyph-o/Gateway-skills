@@ -39,7 +39,29 @@ test.describe("in-page anchors glide to their section", () => {
 
   test("the landed section clears the sticky header", async ({ page }) => {
     await page.goto("/care-show/leadership#register");
-    await page.waitForTimeout(800);
+
+    // Wait for the glide to actually stop. A fixed timeout is a guess, and
+    // under parallel workers on a loaded machine it was expiring mid-scroll.
+    await page.waitForFunction(
+      () =>
+        new Promise<boolean>((resolve) => {
+          let last = window.scrollY;
+          let settled = 0;
+          const tick = () => {
+            if (window.scrollY === last) {
+              settled += 1;
+              if (settled >= 3) return resolve(true);
+            } else {
+              settled = 0;
+              last = window.scrollY;
+            }
+            requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }),
+      undefined,
+      { timeout: 10_000 },
+    );
 
     const headerBottom = await page
       .locator("header")
