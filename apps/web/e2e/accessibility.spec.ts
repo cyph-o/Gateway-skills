@@ -32,18 +32,31 @@ for (const route of ROUTES) {
 test("the enquiry form is fully operable by keyboard alone", async ({ page }) => {
   await page.goto("/care-show/leadership");
 
-  // Tab from the first field through to the submit button without a mouse.
-  await page.locator("#fullName").focus();
-  await page.keyboard.type("Keyboard Tester");
-  await page.keyboard.press("Tab");
-  await page.keyboard.type("Northwood Care Homes");
-  await page.keyboard.press("Tab");
-  await page.keyboard.type("07912 345678");
-  await page.keyboard.press("Tab");
-  await page.keyboard.type("keyboard@example.co.uk");
+  // Tab through every text field in order, without a mouse. Asserting the
+  // landing field each time means a future field inserted into the middle
+  // fails loudly rather than silently shifting what gets typed where.
+  const sequence = [
+    ["fullName", "Keyboard Tester"],
+    ["jobTitle", "Registered Manager"],
+    ["companyName", "Northwood Care Homes"],
+    ["mobileNumber", "07912 345678"],
+    ["email", "keyboard@example.co.uk"],
+  ] as const;
 
-  await expect(page.locator("#companyName")).toHaveValue("Northwood Care Homes");
-  await expect(page.locator("#email")).toHaveValue("keyboard@example.co.uk");
+  await page.locator(`#${sequence[0][0]}`).focus();
+  for (const [index, [id, value]] of sequence.entries()) {
+    if (index > 0) await page.keyboard.press("Tab");
+    await expect(page.locator(`#${id}`), `tab order reached #${id}`).toBeFocused();
+    await page.keyboard.type(value);
+  }
+
+  for (const [id, value] of sequence) {
+    await expect(page.locator(`#${id}`)).toHaveValue(value);
+  }
+
+  // The selects must be reachable by keyboard too.
+  await page.keyboard.press("Tab");
+  await expect(page.locator("#employeeBand")).toBeFocused();
 
   // The consent checkbox and submit button must both be reachable and focusable.
   await page.locator("#marketingConsent").focus();

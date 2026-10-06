@@ -7,7 +7,7 @@ import { MobileNav } from "./MobileNav";
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-ground/90 backdrop-blur-sm">
+    <header className="sticky top-0 z-40 border-b border-line bg-ground/95 backdrop-blur-sm">
       <Container className="flex h-18 items-center justify-between gap-6">
         <Link href="/" aria-label={"Gateway Skills Network home"} className="shrink-0">
           <LogoLockup size="sm" />

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { LogoLockup } from "@/components/brand/LogoLockup";
 import { brand } from "@/content/brand";
 import { footerContact } from "@/content/footer";
@@ -20,13 +20,26 @@ export function SiteFooter() {
               {footerContact.heading}
             </p>
             <p className="mt-4 max-w-md leading-relaxed">{footerContact.body}</p>
-            <a
-              href={`mailto:${brand.email}`}
-              className="mt-6 inline-flex items-center gap-2 text-emerald-lift underline decoration-emerald-lift/40 underline-offset-4 transition-colors hover:decoration-emerald-lift"
-            >
-              <Mail className="h-4 w-4" aria-hidden="true" />
-              {brand.email}
-            </a>
+            <address className="mt-6 space-y-3 not-italic">
+              <a
+                href={`mailto:${brand.email}`}
+                className="flex items-center gap-2 text-emerald-lift underline decoration-emerald-lift/40 underline-offset-4 transition-colors hover:decoration-emerald-lift"
+              >
+                <Mail className="h-4 w-4 shrink-0" aria-hidden="true" />
+                {brand.email}
+              </a>
+              <a
+                href={brand.telephoneHref}
+                className="flex items-center gap-2 text-emerald-lift underline decoration-emerald-lift/40 underline-offset-4 transition-colors hover:decoration-emerald-lift"
+              >
+                <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
+                {brand.telephone}
+              </a>
+              <p className="flex items-start gap-2">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+                <span>{brand.address}</span>
+              </p>
+            </address>
           </div>
 
           <div className="grid gap-10 sm:grid-cols-2">

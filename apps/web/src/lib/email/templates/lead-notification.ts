@@ -4,7 +4,11 @@ export interface LeadNotificationData {
   reference: string;
   campaign: CampaignId;
   fullName: string;
+  jobTitle: string | null;
   companyName: string;
+  employeeBand: string | null;
+  levyPayer: string | null;
+  interests: readonly string[];
   mobileNumber: string;
   email: string;
   marketingConsent: boolean;
@@ -39,7 +43,11 @@ function rows(data: LeadNotificationData): [string, string][] {
     ["Reference", data.reference],
     ["Programme", campaignLabel(data.campaign)],
     ["Full name", data.fullName],
+    ["Job title", data.jobTitle || "Not given"],
     ["Company / care group", data.companyName],
+    ["UK employees", data.employeeBand || "Not given"],
+    ["Pays the levy", data.levyPayer || "Not given"],
+    ["Programmes of interest", data.interests.length ? data.interests.join(", ") : "None ticked"],
     ["Direct mobile", data.mobileNumber],
     ["Corporate email", data.email],
     ["Marketing consent", data.marketingConsent ? "Given" : "Not given"],

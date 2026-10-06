@@ -32,9 +32,12 @@ test("submits an enquiry with JavaScript disabled", async ({ page }) => {
   expect(stamp, "renderedAt is set on mount, so it must be empty without JS").toBe("");
 
   await page.fill("#fullName", "Jordan Blake");
+  await page.fill("#jobTitle", "Operations Director");
   await page.fill("#companyName", "Northwood Care Homes");
   await page.fill("#mobileNumber", "07912 345678");
   await page.fill("#email", address);
+  await page.selectOption("#employeeBand", "1-49");
+  await page.selectOption("#levyPayer", "no");
   await page.getByRole("button", { name: /secure my funding audit/i }).click();
 
   await expect(page).toHaveURL(/\/enquiry-received\?ref=GSN-/);
@@ -53,9 +56,12 @@ test("still deduplicates a repeated no-JavaScript submission", async ({ page }) 
   for (const attempt of [1, 2]) {
     await page.goto("/care-show/ai-automation");
     await page.fill("#fullName", "Jordan Blake");
+    await page.fill("#jobTitle", "Operations Director");
     await page.fill("#companyName", "Northwood Care Homes");
     await page.fill("#mobileNumber", "07912 345678");
     await page.fill("#email", address);
+    await page.selectOption("#employeeBand", "1-49");
+    await page.selectOption("#levyPayer", "unsure");
     await page.getByRole("button", { name: /secure my funding audit/i }).click();
     await expect(page, `attempt ${attempt}`).toHaveURL(/\/enquiry-received/);
   }
@@ -68,9 +74,12 @@ test("still deduplicates a repeated no-JavaScript submission", async ({ page }) 
 test("validation errors still render without JavaScript", async ({ page }) => {
   await page.goto("/care-show/leadership");
   await page.fill("#fullName", "J");
+  await page.fill("#jobTitle", "Operations Director");
   await page.fill("#companyName", "Northwood Care Homes");
   await page.fill("#mobileNumber", "nope");
   await page.fill("#email", "also-nope");
+  await page.selectOption("#employeeBand", "1-49");
+  await page.selectOption("#levyPayer", "no");
   await page.getByRole("button", { name: /secure my funding audit/i }).click();
 
   await expect(page.locator("#mobileNumber-error")).toBeVisible();

@@ -1,14 +1,16 @@
 import { ButtonLink } from "@/components/primitives/Button";
-import { CapabilityCards } from "@/components/sections/CapabilityCards";
+import { LogoWall } from "@/components/sections/LogoWall";
+import { ProgrammeCards } from "@/components/sections/ProgrammeCards";
+import { TrustBanner } from "@/components/sections/TrustBanner";
 import { EmployerExperience } from "@/components/sections/EmployerExperience";
-import { OrganisationWall } from "@/components/sections/OrganisationWall";
 import { PathwayFlow } from "@/components/sections/PathwayFlow";
 import { LeadCaptureSection } from "@/components/sections/LeadCaptureSection";
 import { OverlaySection } from "@/components/sections/OverlaySection";
 import { PageHero } from "@/components/sections/PageHero";
+import { PropositionRows } from "@/components/sections/PropositionRows";
 import { ProgrammeSummary } from "@/components/sections/ProgrammeSummary";
 import { brand } from "@/content/brand";
-import { capabilities, capabilityHeader, homeHero } from "@/content/home";
+import { capabilityHeader, connectorHeader, connectorPoints, homeHero, programmeCards } from "@/content/home";
 import { aiPillars } from "@/content/ai-automation";
 import { leadershipPropositions } from "@/content/leadership";
 import {
@@ -52,11 +54,15 @@ export default function HomePage() {
         }
       />
 
-      <CapabilityCards header={capabilityHeader} items={capabilities} />
+      <TrustBanner />
+
+      <ProgrammeCards header={capabilityHeader} items={programmeCards} />
 
       <EmployerExperience />
 
-      <OrganisationWall />
+      <LogoWall />
+
+      <PropositionRows header={connectorHeader} items={connectorPoints} tone="surface" />
 
       <PathwayFlow />
 

@@ -10,6 +10,7 @@ export const leads = pgTable(
     /** Client-generated per form render — the idempotency key. */
     submissionId: uuid("submission_id").notNull(),
     fullName: text("full_name").notNull(),
+    jobTitle: text("job_title"),
     companyName: text("company_name").notNull(),
     /** E.164 normalised. */
     mobileNumber: text("mobile_number").notNull(),
@@ -17,6 +18,12 @@ export const leads = pgTable(
     /** Lowercased + trimmed, for lookup without a uniqueness constraint. */
     emailNormalised: text("email_normalised").notNull(),
     campaign: text("campaign").notNull(),
+    /** Employer size band: "1-49" | "50-249" | "250+". */
+    employeeBand: text("employee_band"),
+    /** Apprenticeship levy status: "yes" | "no" | "unsure". */
+    levyPayer: text("levy_payer"),
+    /** Programme interests ticked on the form. */
+    interests: jsonb("interests").$type<string[]>().notNull().default([]),
     attribution: jsonb("attribution").$type<Record<string, string>>().notNull().default({}),
     status: text("status", { enum: ["new", "contacted", "closed"] })
       .notNull()

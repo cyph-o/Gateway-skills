@@ -91,8 +91,11 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
-    /* Belt-and-braces: no element may push the page sideways on a phone. */
-    overflow-x: hidden;
+    /* Belt-and-braces: no element may push the page sideways on a phone.
+       `clip`, NOT `hidden`: hidden makes <html> a scroll container, which
+       breaks `position: sticky` for every descendant — it silently stopped the
+       header sticking. clip guards the same thing without that side effect. */
+    overflow-x: clip;
     /* In-page links glide to their section. The reduced-motion block below
        forces this back to `auto`, so anyone who asks for less movement gets an
        instant jump instead. */

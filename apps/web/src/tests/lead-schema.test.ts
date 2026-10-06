@@ -10,6 +10,9 @@ function formPayload(overrides: Record<string, string> = {}) {
     renderedAt: String(Date.now()),
     [HONEYPOT_FIELD]: "",
     fullName: "Alex Morgan",
+    jobTitle: "Registered Manager",
+    employeeBand: "50-249",
+    levyPayer: "no",
     companyName: "Example Care Group Ltd",
     mobileNumber: "07700 900123",
     email: "alex@example.co.uk",
@@ -56,6 +59,26 @@ describe("leadFormSchema", () => {
     const paths = result.success ? [] : result.error.issues.map((i) => i.path[0]);
     expect(paths).toContain("mobileNumber");
     expect(paths).toContain("email");
+  });
+
+  it("keeps only recognised programme interests", () => {
+    const result = leadFormSchema.safeParse({
+      ...formPayload(),
+      interests: ["frontline", "not_a_programme", "dual_pathway"],
+    });
+    expect(result.success).toBe(true);
+    expect(result.success && result.data.interests).toEqual(["frontline", "dual_pathway"]);
+  });
+
+  it("treats no ticked interest as an empty list, not a failure", () => {
+    const result = leadFormSchema.safeParse(formPayload());
+    expect(result.success).toBe(true);
+    expect(result.success && result.data.interests).toEqual([]);
+  });
+
+  it("rejects an employer size or levy answer outside the allowed set", () => {
+    expect(leadFormSchema.safeParse(formPayload({ employeeBand: "900" })).success).toBe(false);
+    expect(leadFormSchema.safeParse(formPayload({ levyPayer: "maybe" })).success).toBe(false);
   });
 
   it("rejects an unknown campaign rather than trusting the client", () => {

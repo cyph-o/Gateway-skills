@@ -19,7 +19,13 @@ import { deriveSubmissionId } from "@/lib/leads/submission-id";
 import type { LeadFormState } from "@/lib/leads/form-state";
 import { drainOutbox } from "@/lib/outbox/drain";
 
-const ECHO_FIELDS = ["fullName", "companyName", "mobileNumber", "email"] as const;
+const ECHO_FIELDS = [
+  "fullName",
+  "jobTitle",
+  "companyName",
+  "mobileNumber",
+  "email",
+] as const;
 
 function echo(formData: FormData): Record<string, string> {
   const out: Record<string, string> = {};
@@ -79,7 +85,11 @@ export async function submitLead(
   }
 
   // 3. Validation.
-  const parsed = leadFormSchema.safeParse(Object.fromEntries(formData));
+  // Object.fromEntries keeps only the LAST value of a repeated key, which
+  // would silently drop all but one ticked programme checkbox.
+  const payload: Record<string, unknown> = Object.fromEntries(formData);
+  payload.interests = formData.getAll("interests");
+  const parsed = leadFormSchema.safeParse(payload);
   if (!parsed.success) {
     const errors: LeadFieldErrors = {};
     for (const issue of parsed.error.issues) {

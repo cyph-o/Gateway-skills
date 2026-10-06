@@ -97,7 +97,7 @@ test("form controls meet touch-target and no-zoom minimums", async ({ page }) =>
   await page.setViewportSize({ width: 390, height: 900 });
   await page.goto("/care-show/leadership");
 
-  for (const name of ["fullName", "companyName", "mobileNumber", "email"]) {
+  for (const name of ["fullName", "jobTitle", "companyName", "mobileNumber", "email"]) {
     const field = page.locator(`#${name}`);
     const box = await field.boundingBox();
     expect(box!.height, `${name} touch target`).toBeGreaterThanOrEqual(44);
@@ -125,4 +125,31 @@ test("mobile navigation opens, closes and traps nothing", async ({ page }) => {
 
   await page.keyboard.press("Escape");
   await expect(panel).toBeHidden();
+});
+
+test("the mobile menu opens wherever the visitor has scrolled to", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/", { waitUntil: "load" });
+
+  // Regression: a body scroll-lock used to stop the sticky header sticking,
+  // which threw the panel (anchored to that header) far off-screen. The menu
+  // then looked broken until you scrolled back to the top.
+  for (const y of [0, 1500, 4000]) {
+    await page.evaluate((top) => window.scrollTo(0, top), y);
+    await page.waitForTimeout(250);
+
+    await page.getByRole("button", { name: /open menu/i }).click();
+    const panel = page.locator("#mobile-nav-panel");
+    await expect(panel, `panel at scrollY=${y}`).toBeInViewport();
+    await expect(panel.getByRole("link", { name: "Funding" })).toBeVisible();
+
+    // The header must stay pinned while the menu is open.
+    const headerTop = await page
+      .locator("header")
+      .evaluate((el) => Math.round(el.getBoundingClientRect().top));
+    expect(headerTop, `header must stay stuck at scrollY=${y}`).toBe(0);
+
+    await page.keyboard.press("Escape");
+    await expect(panel).toBeHidden();
+  }
 });

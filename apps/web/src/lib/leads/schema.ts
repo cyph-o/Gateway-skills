@@ -50,11 +50,42 @@ const email = z
   .max(254, "That email address is too long")
   .trim();
 
+/** Employer size bands, as specified by Gateway. */
+export const EMPLOYEE_BANDS = ["1-49", "50-249", "250+"] as const;
+
+/** Levy status. "unsure" is a legitimate answer and must round-trip. */
+export const LEVY_ANSWERS = ["yes", "no", "unsure"] as const;
+
+/** Programme interest checkboxes. */
+export const PROGRAMME_INTERESTS = {
+  frontline: "Levels 2, 3 & 5 Frontline & Management",
+  ai_automation: "Level 4 AI Automation Track",
+  dual_pathway: "Level 6 & Level 7 Combined Pathway",
+} as const;
+
+export type ProgrammeInterest = keyof typeof PROGRAMME_INTERESTS;
+
 export const leadFormSchema = z.object({
   fullName: name,
+  jobTitle: z
+    .string()
+    .trim()
+    .min(2, "Please enter your job title")
+    .max(120, "That job title is too long")
+    .transform(collapseWhitespace),
   companyName: organisation,
   mobileNumber: mobile,
   email,
+  employeeBand: z.enum(EMPLOYEE_BANDS, { message: "Select your organisation size" }),
+  levyPayer: z.enum(LEVY_ANSWERS, { message: "Select your levy status" }),
+  /** Checkbox group: the browser omits unchecked boxes entirely. */
+  interests: z
+    .union([z.string(), z.array(z.string())])
+    .optional()
+    .transform((v) => {
+      const raw = v === undefined ? [] : Array.isArray(v) ? v : [v];
+      return raw.filter((k): k is ProgrammeInterest => k in PROGRAMME_INTERESTS);
+    }),
   campaign: z.enum(CAMPAIGN_IDS),
   /** Epoch ms stamped on mount. Absent without JavaScript, which disables the
    *  timing heuristic but not the honeypot or the rate limits. */

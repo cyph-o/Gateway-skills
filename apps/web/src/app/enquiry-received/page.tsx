@@ -25,13 +25,11 @@ export default async function EnquiryReceivedPage({
   return (
     <Container width="text" className="py-20 md:py-28">
       <Eyebrow>Enquiry received</Eyebrow>
-      <h1 className="mt-6 text-display-md">
-        Thank you, your funding audit request is with our advisers
-      </h1>
+      <h1 className="mt-6 text-display-md">Thank you</h1>
       <p className="mt-6 text-lg leading-relaxed text-ink-muted">
-        A senior adviser will be in touch directly to confirm your levy position and the
-        funded cohorts your organisation qualifies for. We use the details you provided to
-        respond to this enquiry.
+        Your request has been securely logged with Gateway Skills Network Ltd. A senior
+        managed-network advisor will review your corporate profile and contact your direct
+        work inbox within 24 hours with your funding approval token.
       </p>
 
       {reference ? (

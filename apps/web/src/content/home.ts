@@ -1,54 +1,72 @@
-import type { Proposition, SectionHeader } from "./types";
+import type { IconName, Proposition, SectionHeader } from "./types";
 
 export const homeHero = {
-  eyebrow: "Gateway Skills Network Ltd",
-  headline: "Connecting Business to Future Skills",
+  eyebrow: "Gateway Skills Network Ltd · Connecting Business to Future Skills",
+  headline: "Transform Your Care Service Performance with 95%–100% Government Funding.",
   standfirst:
-    "We connect UK employers to fully funded, higher-level qualifications in " +
-    "strategic leadership, service transformation, and AI & automation, delivered " +
-    "through our authorised college network and ESFA registered training partners.",
-  primaryCta: { href: "/programmes/leadership", label: "Explore programmes" },
-  secondaryCta: { href: "/contact", label: "Check your funding" },
+    "Gateway Skills Network connects adult social care providers with elite, " +
+    "Ofsted-regulated training matrices to deliver fully subsidised frontline workforce, " +
+    "operational automation, and management leadership pathways.",
 } as const;
 
+export const trustBanner =
+  "Delivering High-Impact Professional Development Tailored Pathways for the Adult " +
+  "Social Care Sector.";
+
 export const capabilityHeader: SectionHeader = {
-  eyebrow: "Capabilities",
-  heading: "Four capability areas, one funded route",
+  eyebrow: "Programmes",
+  heading: "Complete Workforce Development, Fully Funded Routes",
   standfirst:
-    "Each programme is built for the operational reality of a regulated " +
-    "organisation, not a generic classroom.",
+    "Each pathway is built for the operational reality of a regulated care service, " +
+    "not a generic classroom.",
 };
 
-export const capabilities: readonly (Proposition & { href: string })[] = [
+export interface ProgrammeCard {
+  readonly title: string;
+  readonly body: string;
+  readonly icon: IconName;
+  readonly href: string;
+  readonly fundingTag?: string;
+  readonly roles?: readonly string[];
+}
+
+export const programmeCards: readonly ProgrammeCard[] = [
   {
-    title: "Strategic Leadership",
+    title: "Frontline Care Worker & Operational Manager Programmes",
     body:
-      "CMI Level 7 Diploma in Strategic Management and Leadership Practice, with " +
-      "progression to Chartered Manager status.",
+      "Fully funded workforce development pathways designed for frontline care staff, " +
+      "senior assistants, and team leads to embed clinical excellence, safe medication " +
+      "handling, and localised service management. Includes Level 2, Level 3 and Level 5 " +
+      "frameworks.",
+    icon: "heart-handshake",
+    href: "/programmes/frontline",
+    fundingTag: "100% government funded programmes",
+  },
+  {
+    title: "Strategic Care Leadership & Service Design Pathway",
+    body:
+      "Exclusive dual-qualification track built specifically for healthcare executives, " +
+      "owners, and senior managers. Combines a Level 6 Service Designer framework with an " +
+      "embedded Level 7 Diploma in Strategic Management & Leadership Practice. Focuses " +
+      "heavily on auditing care delivery, maximising workforce retention, and fully " +
+      "mastering operational service design.",
     icon: "award",
     href: "/programmes/leadership",
+    roles: [
+      "Directors, Owners & Nominated Individuals",
+      "Care Quality Leads & Registered Home Managers",
+      "Service & Quality Improvement Leads",
+      "Transformation & Innovation Leads",
+      "Digital Transformation & Operations Managers",
+      "Programme, Project & Future Service Leaders",
+    ],
   },
   {
-    title: "Service Transformation",
+    title: "Level 4 AI Automation Practitioner Programme",
     body:
-      "Level 6 Service Designer, aligning governance and continuous improvement to the " +
-      "CQC Single Assessment Framework.",
-    icon: "workflow",
-    href: "/programmes/leadership",
-  },
-  {
-    title: "Professional Business Skills",
-    body:
-      "Business administration, customer service, team leading and management " +
-      "qualifications, matched to the right accredited provider.",
-    icon: "clipboard-list",
-    href: "/contact",
-  },
-  {
-    title: "AI & Automation",
-    body:
-      "Level 4 AI & Automation Practitioner, training your existing staff to build " +
-      "live assistants and remove administrative overhead.",
+      "Upskill care coordinators, administrators, or rota managers to build custom " +
+      "digital workflows. Saves hours of manual desk overhead by automating care logs, " +
+      "rota scheduling, and compliance data tracking.",
     icon: "cpu",
     href: "/programmes/ai-automation",
   },
@@ -58,31 +76,30 @@ export const connectorHeader: SectionHeader = {
   eyebrow: "Our role",
   heading: "Gateway's role is the connection",
   standfirst:
-    "We are not a college. We sit between employers and accredited delivery, so the " +
-    "funding route, the candidate fit and the qualification all line up before " +
-    "anyone enrols.",
+    "We are an independent B2B managing agent and broker, not a training provider. We " +
+    "analyse your workforce needs and connect you to the right accredited delivery.",
 };
 
 export const connectorPoints: readonly Proposition[] = [
   {
-    title: "Funding assessed first",
+    title: "Funding Assessed First",
     body:
-      "We establish your levy position and eligible co-investment route before any " +
-      "commitment is made.",
+      "We establish your levy or non-levy position, grant eligibility, or localised " +
+      "funding routes before any operational commitment is made.",
     icon: "receipt",
   },
   {
-    title: "Delivered by accredited partners",
+    title: "Elite Managed Network",
     body:
-      "All higher-level qualifications are delivered via our authorised, " +
-      "government-funded college network and ESFA registered training providers.",
+      "All higher-level qualifications are delivered exclusively via our authorised " +
+      "network of ESFA registered training providers and Ofsted-approved colleges.",
     icon: "building",
   },
   {
-    title: "Applied inside your organisation",
+    title: "Seamless Integration",
     body:
-      "Learning is applied to live operational problems in your own service, during " +
-      "the programme.",
+      "Learning is applied directly to live operational and compliance problems inside " +
+      "your own care service during the active programme duration.",
     icon: "user-cog",
   },
 ] as const;

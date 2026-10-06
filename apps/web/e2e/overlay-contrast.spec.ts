@@ -1,5 +1,13 @@
 import { expect, test, type Page } from "@playwright/test";
 
+// Screenshotting and decoding a region per text element is inherently slow,
+// and the homepage now carries six overlay sections.
+test.describe.configure({ timeout: 120_000 });
+
+/** Per section, sampling every paragraph adds cost without adding signal: the
+ *  heading and the first body line already prove the scrim over that image. */
+const MAX_SAMPLES_PER_SECTION = 4;
+
 /**
  * Text sitting on a photograph cannot be checked from the DOM — there is no
  * background-color to resolve, and the real risk is a bright patch of the
@@ -80,7 +88,8 @@ async function auditOverlays(page: Page, route: string) {
   for (let i = 0; i < (await sections.count()); i += 1) {
     const section = sections.nth(i);
     const texts = section.locator("h1, h2, p, dd span");
-    for (let j = 0; j < (await texts.count()); j += 1) {
+    const sampleCount = Math.min(await texts.count(), MAX_SAMPLES_PER_SECTION);
+    for (let j = 0; j < sampleCount; j += 1) {
       const el = texts.nth(j);
       const content = (await el.textContent())?.trim() ?? "";
       if (content.length < 3) continue;

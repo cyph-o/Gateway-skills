@@ -6,13 +6,16 @@ import { ATTRIBUTION_KEYS, type Attribution } from "@/lib/attribution";
 import { initialLeadFormState } from "@/lib/leads/form-state";
 import type { CampaignId } from "@/lib/leads/campaigns";
 import { ConsentFieldset } from "./ConsentFieldset";
+import { InterestFieldset } from "./InterestFieldset";
+import { SelectField } from "./SelectField";
 import { FormField, type FieldSpec } from "./FormField";
 import { Honeypot } from "./Honeypot";
 import { SubmitButton } from "./SubmitButton";
 
 const FIELDS: readonly FieldSpec[] = [
   { name: "fullName", label: "Full name", autoComplete: "name" },
-  { name: "companyName", label: "Company / care group name", autoComplete: "organization" },
+  { name: "jobTitle", label: "Job title", autoComplete: "organization-title" },
+  { name: "companyName", label: "Care provider / company name", autoComplete: "organization" },
   {
     name: "mobileNumber",
     label: "Direct mobile number",
@@ -22,7 +25,7 @@ const FIELDS: readonly FieldSpec[] = [
   },
   {
     name: "email",
-    label: "Corporate email address",
+    label: "Direct work email",
     type: "email",
     inputMode: "email",
     autoComplete: "email",
@@ -98,6 +101,34 @@ export function LeadForm({ campaign, submitLabel, attribution = {} }: LeadFormPr
             error={errors[field.name as keyof typeof errors]}
           />
         ))}
+      </div>
+
+      <div className="mt-5 space-y-5">
+        <SelectField
+          name="employeeBand"
+          label="Total number of UK employees"
+          placeholder="Select a range"
+          defaultValue={state.values?.employeeBand}
+          error={errors.employeeBand}
+          options={[
+            { value: "1-49", label: "1 to 49" },
+            { value: "50-249", label: "50 to 249" },
+            { value: "250+", label: "250 or more" },
+          ]}
+        />
+        <SelectField
+          name="levyPayer"
+          label="Does your organisation pay the Apprenticeship Levy?"
+          placeholder="Select an answer"
+          defaultValue={state.values?.levyPayer}
+          error={errors.levyPayer}
+          options={[
+            { value: "yes", label: "Yes" },
+            { value: "no", label: "No" },
+            { value: "unsure", label: "Unsure" },
+          ]}
+        />
+        <InterestFieldset />
       </div>
 
       <div className="mt-7 space-y-6">

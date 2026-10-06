@@ -16,10 +16,13 @@ export function MobileNav() {
       if (e.key === "Escape") setOpen(false);
     };
     document.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
+    // No body scroll lock. Setting `overflow: hidden` on <body> makes it a
+    // scroll container, which stops the sticky header sticking — the panel is
+    // anchored to that header, so opening the menu part-way down the page threw
+    // it off-screen entirely. The panel scrolls internally instead (max-h +
+    // overflow-y-auto), so there is nothing to lock.
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
     };
   }, [open]);
 
@@ -43,7 +46,7 @@ export function MobileNav() {
       <div
         id="mobile-nav-panel"
         hidden={!open}
-        className="fixed inset-x-0 top-18 z-40 border-b border-line bg-ground px-6 pt-6 pb-10 shadow-sm"
+        className="absolute inset-x-0 top-full z-40 max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-b border-line bg-ground px-6 pt-6 pb-10 shadow-sm"
       >
         <nav aria-label="Primary, mobile">
           <ul className="flex flex-col divide-y divide-line">

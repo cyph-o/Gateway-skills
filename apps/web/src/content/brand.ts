@@ -8,6 +8,9 @@ export const brand = {
   disciplines: "Leadership. Service Transformation. AI & Automation.",
   email: "info@gatewayskillsnetwork.co.uk",
   webLabel: "www.gatewayskillsnetwork.co.uk",
+  telephone: "07832 874 187",
+  telephoneHref: "tel:+447832874187",
+  address: "71-75 Shelton Street, Covent Garden, London, WC2H 9JQ",
 } as const;
 
 /**

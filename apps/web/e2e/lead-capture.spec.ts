@@ -32,9 +32,12 @@ test.afterAll(async () => {
 
 async function fillForm(page: import("@playwright/test").Page, email: string) {
   await page.fill("#fullName", FILLED.fullName);
+  await page.fill("#jobTitle", "Registered Manager");
   await page.fill("#companyName", FILLED.companyName);
   await page.fill("#mobileNumber", FILLED.mobileNumber);
   await page.fill("#email", email);
+  await page.selectOption("#employeeBand", "50-249");
+  await page.selectOption("#levyPayer", "no");
   // The server rejects submissions faster than a human could type.
   await page.waitForTimeout(MIN_FILL_MS + 300);
 }
@@ -108,9 +111,12 @@ test("the same enquiry submitted twice yields one lead and one notification", as
 test("rejects invalid input with field-level errors and keeps what was typed", async ({ page }) => {
   await page.goto("/care-show/leadership");
   await page.fill("#fullName", "A");
+  await page.fill("#jobTitle", "Operations Director");
   await page.fill("#companyName", "Example Care Group Ltd");
   await page.fill("#mobileNumber", "not-a-number");
   await page.fill("#email", "not-an-email");
+  await page.selectOption("#employeeBand", "1-49");
+  await page.selectOption("#levyPayer", "no");
   await page.waitForTimeout(MIN_FILL_MS + 300);
   await page.getByRole("button", { name: /secure my funding audit/i }).click();
 
@@ -140,9 +146,12 @@ test("submitting too quickly is rejected as mechanical", async ({ page }) => {
   const email = uniqueEmail("fast");
   await page.goto("/care-show/leadership");
   await page.fill("#fullName", FILLED.fullName);
+  await page.fill("#jobTitle", "Registered Manager");
   await page.fill("#companyName", FILLED.companyName);
   await page.fill("#mobileNumber", FILLED.mobileNumber);
   await page.fill("#email", email);
+  await page.selectOption("#employeeBand", "50-249");
+  await page.selectOption("#levyPayer", "no");
   // Deliberately no wait: under MIN_FILL_MS.
   await page.getByRole("button", { name: /secure my funding audit/i }).click();
 

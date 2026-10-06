@@ -40,11 +40,15 @@ export async function createLead(
         reference: generateReference(),
         submissionId: meta.submissionId,
         fullName: values.fullName,
+        jobTitle: values.jobTitle,
         companyName: values.companyName,
         mobileNumber: values.mobileNumber,
         email: values.email,
         emailNormalised: normaliseEmail(values.email),
         campaign: values.campaign,
+        employeeBand: values.employeeBand,
+        levyPayer: values.levyPayer,
+        interests: [...values.interests],
         attribution: meta.attribution,
       })
       .onConflictDoNothing({ target: leads.submissionId })
