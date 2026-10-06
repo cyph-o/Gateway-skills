@@ -34,7 +34,7 @@ export function SiteHeader() {
               specificity, so stylesheet order — not class order — would decide
               the winner, and the button would never actually hide. */}
           <span className="hidden sm:block">
-            <ButtonLink href="/contact">Check funding</ButtonLink>
+            <ButtonLink href="/#enquire">Talk to Gateway</ButtonLink>
           </span>
           <MobileNav />
         </div>

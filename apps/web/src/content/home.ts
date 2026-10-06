@@ -13,7 +13,7 @@ export const homeHero = {
 
 export const capabilityHeader: SectionHeader = {
   eyebrow: "Capabilities",
-  heading: "Three capabilities, one funded route",
+  heading: "Four capability areas, one funded route",
   standfirst:
     "Each programme is built for the operational reality of a regulated " +
     "organisation, not a generic classroom.",
@@ -35,6 +35,14 @@ export const capabilities: readonly (Proposition & { href: string })[] = [
       "CQC Single Assessment Framework.",
     icon: "workflow",
     href: "/programmes/leadership",
+  },
+  {
+    title: "Professional Business Skills",
+    body:
+      "Business administration, customer service, team leading and management " +
+      "qualifications, matched to the right accredited provider.",
+    icon: "clipboard-list",
+    href: "/contact",
   },
   {
     title: "AI & Automation",

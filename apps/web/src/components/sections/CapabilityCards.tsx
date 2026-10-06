@@ -20,7 +20,7 @@ export function CapabilityCards({
     <section className="border-t border-line bg-surface py-16 md:py-24">
       <Container>
         <SectionHeading {...header} />
-        <ul className="reveal-stagger mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="reveal-stagger mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
           {items.map((item) => (
             <li key={item.title}>
               <Link

@@ -13,11 +13,11 @@ export interface NavItem {
  * reached by QR code, not browsable sections.
  */
 export const primaryNav: readonly NavItem[] = [
+  { href: "/#experience", label: "Experience" },
+  { href: "/#approach", label: "How it works" },
   { href: "/#leadership", label: "Leadership" },
   { href: "/#ai-automation", label: "AI & Automation" },
   { href: "/#funding", label: "Funding" },
-  { href: "/#approach", label: "Approach" },
-  { href: "/#enquire", label: "Contact" },
 ] as const;
 
 /** Full programme detail lives on its own page, linked from each section. */

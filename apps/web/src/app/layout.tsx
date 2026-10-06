@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { brand, siteUrl } from "@/content/brand";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { RevealEngine } from "@/components/motion/RevealEngine";
 import "./globals.css";
 
 const newsreader = Newsreader({
@@ -60,6 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />
+        <RevealEngine />
         <Analytics />
       </body>
     </html>

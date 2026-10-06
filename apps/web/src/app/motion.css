@@ -145,3 +145,50 @@
     transform: none !important;
   }
 }
+
+/* --------------------------------------------------------------------------
+   JavaScript fallback reveals, for browsers without scroll-driven animations
+   (Firefox, and Safari before 26). The `js-reveals` class is added by
+   RevealEngine only once an observer is live, so these rules can never hide
+   content on their own.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .js-reveals :is(.reveal, .reveal-image, .reveal-left, .reveal-right, .reveal-stagger > *) {
+    opacity: 0;
+    transform: translateY(1.5rem);
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .js-reveals .reveal-left {
+    transform: translateX(-1.5rem);
+  }
+
+  .js-reveals .reveal-right {
+    transform: translateX(1.5rem);
+  }
+
+  .js-reveals .reveal-image {
+    transform: scale(1.04);
+  }
+
+  /* Stagger by index, so a grid resolves in sequence rather than all at once. */
+  .js-reveals .reveal-stagger > *:nth-child(2) {
+    transition-delay: 0.08s;
+  }
+  .js-reveals .reveal-stagger > *:nth-child(3) {
+    transition-delay: 0.16s;
+  }
+  .js-reveals .reveal-stagger > *:nth-child(4) {
+    transition-delay: 0.24s;
+  }
+  .js-reveals .reveal-stagger > *:nth-child(n + 5) {
+    transition-delay: 0.32s;
+  }
+
+  .js-reveals :is(.reveal, .reveal-image, .reveal-left, .reveal-right, .reveal-stagger > *).is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+}

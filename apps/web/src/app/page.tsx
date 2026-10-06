@@ -1,12 +1,14 @@
 import { ButtonLink } from "@/components/primitives/Button";
 import { CapabilityCards } from "@/components/sections/CapabilityCards";
+import { EmployerExperience } from "@/components/sections/EmployerExperience";
+import { OrganisationWall } from "@/components/sections/OrganisationWall";
+import { PathwayFlow } from "@/components/sections/PathwayFlow";
 import { LeadCaptureSection } from "@/components/sections/LeadCaptureSection";
 import { OverlaySection } from "@/components/sections/OverlaySection";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProgrammeSummary } from "@/components/sections/ProgrammeSummary";
-import { PropositionRows } from "@/components/sections/PropositionRows";
 import { brand } from "@/content/brand";
-import { capabilities, capabilityHeader, connectorHeader, connectorPoints, homeHero } from "@/content/home";
+import { capabilities, capabilityHeader, homeHero } from "@/content/home";
 import { aiPillars } from "@/content/ai-automation";
 import { leadershipPropositions } from "@/content/leadership";
 import {
@@ -41,7 +43,7 @@ export default function HomePage() {
         actions={
           <>
             <ButtonLink href="#enquire" size="lg" variant="on-forest">
-              Check your funding
+              Talk to Gateway
             </ButtonLink>
             <ButtonLink href="#leadership" size="lg" variant="outline-light">
               Explore programmes
@@ -51,6 +53,12 @@ export default function HomePage() {
       />
 
       <CapabilityCards header={capabilityHeader} items={capabilities} />
+
+      <EmployerExperience />
+
+      <OrganisationWall />
+
+      <PathwayFlow />
 
       <OverlaySection
         id="leadership"
@@ -107,10 +115,8 @@ export default function HomePage() {
         tone="light"
       />
 
-      <PropositionRows header={connectorHeader} items={connectorPoints} tone="surface" />
-
       <OverlaySection
-        id="approach"
+        id="why"
         eyebrow={careOverlay.eyebrow}
         heading={careOverlay.heading}
         body={careOverlay.body}

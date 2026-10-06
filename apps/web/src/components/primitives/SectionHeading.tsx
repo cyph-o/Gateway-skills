@@ -29,7 +29,7 @@ export function SectionHeading({
   const label = index ?? eyebrow;
   return (
     <div className={`reveal ${align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}`}>
-      {label ? <Eyebrow rule={align === "left"}>{label}</Eyebrow> : null}
+      {label ? <Eyebrow>{label}</Eyebrow> : null}
       <Tag className={`${sizes[size]} ${label ? "mt-5" : ""}`}>{heading}</Tag>
       {standfirst ? (
         <p className="mt-5 text-lg leading-relaxed text-ink-muted md:text-xl">{standfirst}</p>
