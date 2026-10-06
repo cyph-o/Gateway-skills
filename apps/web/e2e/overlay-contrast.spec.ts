@@ -135,7 +135,27 @@ async function auditOverlays(page: Page, route: string) {
 
       const [r, g, b] = info.color.match(/\d+/g)!.slice(0, 3).map(Number);
       const textLum = lum(r!, g!, b!);
-      const { min, max } = await extremes(page, shot);
+
+      let { min, max } = await extremes(page, shot);
+      // A perfectly uniform sample means the frame was captured before the
+      // photograph and scrim painted — under full-suite parallelism that
+      // happens occasionally. Re-capture once rather than assert on a blank.
+      if (max - min < 0.001) {
+        await page.waitForTimeout(400);
+        await section.evaluate((node) => {
+          node.setAttribute("data-audit", "1");
+          const style = document.createElement("style");
+          style.id = "audit-style";
+          style.textContent = '[data-audit="1"] * { color: transparent !important; }';
+          document.head.append(style);
+        });
+        const retry = await page.screenshot({ clip: info.box });
+        await section.evaluate((node) => {
+          node.removeAttribute("data-audit");
+          document.getElementById("audit-style")?.remove();
+        });
+        ({ min, max } = await extremes(page, retry));
+      }
       // Worst case: compare against whichever extreme is nearest the text.
       const worst = Math.min(ratio(textLum, min), ratio(textLum, max));
 
