@@ -15,31 +15,35 @@
 :root {
   color-scheme: light;
 
-  /* Brand primitives */
-  --emerald: #046a38;
-  --emerald-deep: #03502b;
-  --emerald-lift: #7fd4a3;
-  --forest: #123d2d;
-  --forest-deep: #0e2b20;
-  --slate: #2f4f4f;
-  --sage: #f4f7f3;
-  --mist: #dce9df;
+  /* Brand primitives, taken from the logo: navy wordmark, royal and sky blue
+     from the mark. Token names predate the rebrand and are kept so the
+     section rhythm (light / "forest") and component props stay stable. */
+  --emerald: #1747a6;
+  --emerald-deep: #0d2f7c;
+  --emerald-lift: #6cc8ef;
+  --forest: #0a1f52;
+  --forest-deep: #071739;
+  --slate: #2b3d5c;
+  --sage: #f3f6fb;
+  --mist: #dbe5f2;
+  /* The mark's green, for small highlights only. */
+  --signal: #5cc12c;
 
   /* Semantic roles — light */
-  --ground: #f4f7f3;
+  --ground: #f3f6fb;
   --surface: #ffffff;
-  --ink-strong: #123d2d;
-  --ink: #2f4f4f;
-  --ink-muted: #4a635c;
-  --line: #cbdbd0;
-  --line-strong: #a8c0b0;
-  --accent: #046a38;
+  --ink-strong: #0d2f7c;
+  --ink: #2b3d5c;
+  --ink-muted: #4b5d7a;
+  --line: #c8d5e8;
+  --line-strong: #a3b6d2;
+  --accent: #1747a6;
   --accent-ink: #ffffff;
 
   /* Semantic roles — on forest sections */
-  --on-forest-ink: #eef4ef;
-  --on-forest-muted: #b7cdbe;
-  --on-forest-line: #2b5742;
+  --on-forest-ink: #eef3fb;
+  --on-forest-muted: #b3c5e0;
+  --on-forest-line: #20397a;
 }
 
 @theme inline {
@@ -51,6 +55,7 @@
   --color-slate: var(--slate);
   --color-sage: var(--sage);
   --color-mist: var(--mist);
+  --color-signal: var(--signal);
 
   --color-ground: var(--ground);
   --color-surface: var(--surface);

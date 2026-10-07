@@ -17,7 +17,7 @@ const newsreader = Newsreader({
 const hanken = Hanken_Grotesk({
   subsets: ["latin"],
   display: "swap",
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700", "800"],
   variable: "--font-hanken",
 });
 
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#046A38",
+  themeColor: "#1747A6",
   colorScheme: "light",
 };
 

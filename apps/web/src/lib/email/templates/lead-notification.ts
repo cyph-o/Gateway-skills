@@ -68,8 +68,8 @@ export function leadNotificationHtml(data: LeadNotificationData): string {
     .map(
       ([label, value]) =>
         `<tr>` +
-        `<td style="padding:8px 16px 8px 0;color:#4a635c;font-size:13px;white-space:nowrap;vertical-align:top">${esc(label)}</td>` +
-        `<td style="padding:8px 0;color:#123d2d;font-size:14px;font-weight:600">${esc(value)}</td>` +
+        `<td style="padding:8px 16px 8px 0;color:#4b5d7a;font-size:13px;white-space:nowrap;vertical-align:top">${esc(label)}</td>` +
+        `<td style="padding:8px 0;color:#0d2f7c;font-size:14px;font-weight:600">${esc(value)}</td>` +
         `</tr>`,
     )
     .join("");
@@ -79,12 +79,12 @@ export function leadNotificationHtml(data: LeadNotificationData): string {
     : "Marketing consent was <strong>not</strong> given. Respond to this enquiry only. Do not add this contact to marketing lists.";
 
   return [
-    `<div style="font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;background:#f4f7f3;padding:24px">`,
-    `<div style="max-width:560px;margin:0 auto;background:#ffffff;border:1px solid #cbdbd0;padding:28px">`,
-    `<p style="margin:0 0 4px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#046a38">Gateway Skills Network</p>`,
-    `<h1 style="margin:0 0 20px;font-size:20px;color:#123d2d">New funding audit enquiry</h1>`,
+    `<div style="font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;background:#f3f6fb;padding:24px">`,
+    `<div style="max-width:560px;margin:0 auto;background:#ffffff;border:1px solid #c8d5e8;padding:28px">`,
+    `<p style="margin:0 0 4px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#1747a6">Gateway Skills Network</p>`,
+    `<h1 style="margin:0 0 20px;font-size:20px;color:#0d2f7c">New funding audit enquiry</h1>`,
     `<table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse">${cells}</table>`,
-    `<p style="margin:24px 0 0;padding-top:16px;border-top:1px solid #cbdbd0;font-size:12px;color:#4a635c">${consentNote}</p>`,
+    `<p style="margin:24px 0 0;padding-top:16px;border-top:1px solid #c8d5e8;font-size:12px;color:#4b5d7a">${consentNote}</p>`,
     `</div></div>`,
   ].join("");
 }
