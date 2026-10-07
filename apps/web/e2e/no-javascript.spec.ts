@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { closeDb, deleteLeadsByEmail, leadsByEmail, outboxForLead, resetRateLimits } from "./helpers/db";
+import { closeDb, deleteLeadsByEmail, leadsByEmail, outboxForLead, resetRateLimits } from "./helpers/store";
 
 /**
  * The resilience claim that matters at a trade stand: a visitor scanning a QR
@@ -52,7 +52,7 @@ test("submits an enquiry with JavaScript disabled", async ({ page }) => {
 
   const rows = await leadsByEmail(address);
   expect(rows, "the enquiry must persist without JavaScript").toHaveLength(1);
-  expect(rows[0]!.mobile_number).toBe("+447912345678");
+  expect(rows[0]!.mobileNumber).toBe("+447912345678");
   expect(await outboxForLead(rows[0]!.id)).toHaveLength(1);
 
   await deleteLeadsByEmail(address);

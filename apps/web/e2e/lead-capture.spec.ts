@@ -6,7 +6,7 @@ import {
   leadsByEmail,
   outboxForLead,
   resetRateLimits,
-} from "./helpers/db";
+} from "./helpers/store";
 import { MIN_FILL_MS } from "../src/lib/leads/schema";
 
 /** Unique per run so parallel projects never collide on the same row. */
@@ -65,10 +65,10 @@ test("submits an enquiry, persists it transactionally and confirms with a refere
   expect(rows).toHaveLength(1);
   const lead = rows[0]!;
 
-  expect(lead.full_name).toBe(FILLED.fullName);
-  expect(lead.company_name).toBe(FILLED.companyName);
+  expect(lead.fullName).toBe(FILLED.fullName);
+  expect(lead.companyName).toBe(FILLED.companyName);
   // Normalised to E.164 regardless of how it was typed.
-  expect(lead.mobile_number).toBe("+447700900123");
+  expect(lead.mobileNumber).toBe("+447700900123");
   expect(lead.campaign).toBe("care_show_leadership");
   expect(lead.reference).toMatch(/^GSN-[2-9A-HJ-NP-TV-Z]{6}$/);
   // QR attribution captured and stored with the lead, not left to a cookie.

@@ -3,7 +3,6 @@
 import { after } from "next/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { db } from "@/db/client";
 import { readAttributionFromForm } from "@/lib/attribution";
 import { logger } from "@/lib/logger";
 import { checkRateLimit } from "@/lib/leads/rate-limit";
@@ -101,12 +100,11 @@ export async function submitLead(
     return { status: "error", errors, values };
   }
 
-  const database = db();
   let reference: string;
 
   try {
     // 4. Abuse controls, after validation so bad payloads cost nothing.
-    const limit = await checkRateLimit(database, clientIp(await headers()));
+    const limit = await checkRateLimit(clientIp(await headers()));
     if (!limit.allowed) {
       logger.warn("lead.rate_limited", { scope: limit.scope });
       return {

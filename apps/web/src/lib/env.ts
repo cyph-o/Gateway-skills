@@ -21,6 +21,8 @@ const serverSchema = z.object({
   TURNSTILE_SECRET_KEY: z.string().min(1).optional(),
   LEAD_RATE_LIMIT_PER_IP: z.coerce.number().int().positive().default(5),
   LEAD_RATE_LIMIT_GLOBAL: z.coerce.number().int().positive().default(120),
+  ADMIN_RATE_LIMIT_PER_IP: z.coerce.number().int().positive().default(10),
+  ADMIN_RATE_LIMIT_GLOBAL: z.coerce.number().int().positive().default(60),
   OUTBOX_MAX_ATTEMPTS: z.coerce.number().int().positive().default(6),
 });
 

@@ -8,6 +8,13 @@
 
    Each slide holds for ~6s and cross-fades over ~1s. Slides are staggered by
    animation-delay rather than by scripting an index.
+
+   The stagger uses NEGATIVE delays. A positive delay leaves an element in its
+   pre-animation state until it first starts, and that state is opacity 0 — so
+   about a second into the first loop the outgoing plate had faded out while the
+   next had not yet begun, and the hero went briefly blank on every page load.
+   A negative delay instead starts each plate already advanced to its phase, so
+   the cycle is seamless from the first frame.
    ========================================================================== */
 @keyframes hero-cycle {
   0% {
@@ -39,12 +46,14 @@
     animation: hero-cycle 21s linear infinite;
   }
 
+  /* -14s puts this plate 14s into its cycle at load, so it rises at t=7s. */
   .hero-slide:nth-child(2) {
-    animation-delay: 7s;
+    animation-delay: -14s;
   }
 
+  /* -7s likewise brings it in at t=14s. */
   .hero-slide:nth-child(3) {
-    animation-delay: 14s;
+    animation-delay: -7s;
   }
 }
 

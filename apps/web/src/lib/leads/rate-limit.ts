@@ -1,26 +1,10 @@
-import { and, lt, sql } from "drizzle-orm";
-import { rateLimitCounters } from "@/db/schema";
-import type { Database } from "@/db/client";
 import { serverEnv } from "@/lib/env";
+import { leadStore } from "@/lib/storage";
 
 const WINDOW_MS = 10 * 60 * 1000;
 
 function windowStart(now = Date.now()): Date {
   return new Date(Math.floor(now / WINDOW_MS) * WINDOW_MS);
-}
-
-/** Atomic increment-and-read. The upsert is the check: concurrent requests
- *  cannot both observe a stale count and slip past the limit. */
-async function hit(database: Database, bucket: string): Promise<number> {
-  const [row] = await database
-    .insert(rateLimitCounters)
-    .values({ bucket, windowStart: windowStart(), count: 1 })
-    .onConflictDoUpdate({
-      target: [rateLimitCounters.bucket, rateLimitCounters.windowStart],
-      set: { count: sql`${rateLimitCounters.count} + 1` },
-    })
-    .returning({ count: rateLimitCounters.count });
-  return row?.count ?? 1;
 }
 
 export interface RateLimitResult {
@@ -30,27 +14,48 @@ export interface RateLimitResult {
 }
 
 /**
- * Two limits, both per 10-minute window: one per IP to stop a single abuser,
- * and one global as a backstop against a distributed flood. A genuine queue of
- * visitors at a stand sits far below the global ceiling.
+ * Two limits per 10-minute window: one per IP to stop a single abuser, and a
+ * global backstop against a distributed flood. A genuine queue of visitors at
+ * a stand sits far below the global ceiling.
  */
-export async function checkRateLimit(
-  database: Database,
-  ip: string | null,
-): Promise<RateLimitResult> {
+export async function checkRateLimit(ip: string | null): Promise<RateLimitResult> {
   const env = serverEnv();
-  const globalCount = await hit(database, "global");
-  if (globalCount > env.LEAD_RATE_LIMIT_GLOBAL) return { allowed: false, scope: "global" };
+  const store = leadStore();
+  const start = windowStart();
 
-  if (ip) {
-    const ipCount = await hit(database, `ip:${ip}`);
-    if (ipCount > env.LEAD_RATE_LIMIT_PER_IP) return { allowed: false, scope: "ip" };
+  if ((await store.hitRateLimit("global", start)) > env.LEAD_RATE_LIMIT_GLOBAL) {
+    return { allowed: false, scope: "global" };
+  }
+  if (ip && (await store.hitRateLimit(`ip:${ip}`, start)) > env.LEAD_RATE_LIMIT_PER_IP) {
+    return { allowed: false, scope: "ip" };
   }
   return { allowed: true };
 }
 
-/** Housekeeping, called from the cron drain. Keeps the table from growing. */
-export async function pruneRateLimits(database: Database): Promise<void> {
-  const cutoff = new Date(Date.now() - WINDOW_MS * 6);
-  await database.delete(rateLimitCounters).where(and(lt(rateLimitCounters.windowStart, cutoff)));
+/**
+ * Sign-in throttling for the admin area, deliberately on its own counters.
+ *
+ * It must never share the public form's global backstop: that ceiling is sized
+ * for enquiry volume, so a burst of enquiries — or someone flooding the form on
+ * purpose — would otherwise lock the Gateway team out of their own dashboard,
+ * which is precisely what an attacker flooding the form would want. Brute-force
+ * protection is kept by a per-IP bucket plus an admin-only global ceiling.
+ */
+export async function checkAdminRateLimit(ip: string | null): Promise<RateLimitResult> {
+  const env = serverEnv();
+  const store = leadStore();
+  const start = windowStart();
+
+  if ((await store.hitRateLimit("admin:global", start)) > env.ADMIN_RATE_LIMIT_GLOBAL) {
+    return { allowed: false, scope: "global" };
+  }
+  if (ip && (await store.hitRateLimit(`admin:ip:${ip}`, start)) > env.ADMIN_RATE_LIMIT_PER_IP) {
+    return { allowed: false, scope: "ip" };
+  }
+  return { allowed: true };
+}
+
+/** Housekeeping, called from the cron drain. */
+export async function pruneRateLimits(): Promise<void> {
+  await leadStore().pruneRateLimits(new Date(Date.now() - WINDOW_MS * 6));
 }

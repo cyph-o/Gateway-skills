@@ -1,17 +1,32 @@
-import { sql } from "drizzle-orm";
 import { NextResponse } from "next/server";
-import { db } from "@/db/client";
+import { describeDurability, leadStore } from "@/lib/storage";
 
 export const dynamic = "force-dynamic";
 
-/** Liveness plus a real database round-trip, so a deploy that cannot reach
- *  Postgres fails its health check instead of silently rejecting enquiries. */
+/**
+ * Liveness plus a real storage round-trip, so a deploy that cannot reach its
+ * store fails its health check instead of silently rejecting enquiries. The
+ * durability warning is reported here too: JSON storage on a serverless host
+ * loses leads, and that should be visible from outside the process.
+ */
 export async function GET() {
+  const durability = describeDurability();
   try {
-    await db().execute(sql`SELECT 1`);
-    return NextResponse.json({ status: "ok", database: "ok" });
+    const store = leadStore();
+    await store.ping();
+    return NextResponse.json(
+      {
+        status: durability.severity === "critical" ? "degraded" : "ok",
+        storage: store.driver,
+        durability,
+      },
+      { status: durability.severity === "critical" ? 503 : 200 },
+    );
   } catch {
-    // Detail is logged, never returned — health endpoints are public.
-    return NextResponse.json({ status: "degraded", database: "unreachable" }, { status: 503 });
+    // Detail is logged, never returned: health endpoints are public.
+    return NextResponse.json(
+      { status: "degraded", storage: "unreachable", durability },
+      { status: 503 },
+    );
   }
 }

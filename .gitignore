@@ -26,6 +26,10 @@ __pycache__/
 .env.*
 !.env.example
 
+# Captured enquiries written by the JSON lead store. Real personal data —
+# must never reach the repository.
+.data/
+
 # testing
 coverage/
 playwright-report/

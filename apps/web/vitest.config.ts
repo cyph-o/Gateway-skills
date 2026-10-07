@@ -3,8 +3,14 @@ import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import { fileURLToPath } from "node:url";
 
-// Integration tests talk to the real local database.
 config({ path: ".env.local", quiet: true });
+
+// Integration tests exercise whichever driver is configured, but never the
+// store the developer is using: a temp file keeps seeded fixtures out of
+// .data/leads.json.
+process.env.LEAD_STORE_FILE ??= fileURLToPath(
+  new URL("./.data/test-leads.json", import.meta.url),
+);
 
 export default defineConfig({
   plugins: [react()],
@@ -12,7 +18,7 @@ export default defineConfig({
     environment: "node",
     include: ["src/tests/**/*.test.{ts,tsx}"],
     globals: true,
-    // Integration tests share one database; keep them off each other.
+    // Integration tests share one store; keep them off each other.
     fileParallelism: false,
     testTimeout: 20_000,
   },

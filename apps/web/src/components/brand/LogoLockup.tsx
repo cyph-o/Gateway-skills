@@ -36,7 +36,10 @@ export function LogoLockup({
   size = "md",
 }: LogoLockupProps) {
   const primaryTone = tone === "forest" ? "text-white" : "text-ink-strong";
-  const secondaryTone = tone === "forest" ? "text-emerald-lift" : "text-[#1192c4]";
+  // The action token, not a lighter tint: at 10px bold the lighter blue
+  // measured 3.26:1 on the header ground, below the 4.5:1 AA floor, and the
+  // lockup sits in the header of every page.
+  const secondaryTone = tone === "forest" ? "text-emerald-lift" : "text-emerald";
   const markSize = size === "sm" ? "h-9" : "h-11";
   const primarySize = size === "sm" ? "text-lg" : "text-xl md:text-2xl";
   const [first, , ...rest] = brand.wordmarkPrimary;

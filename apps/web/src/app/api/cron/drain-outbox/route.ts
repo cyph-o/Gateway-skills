@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { db } from "@/db/client";
 import { serverEnv } from "@/lib/env";
 import { pruneRateLimits } from "@/lib/leads/rate-limit";
 import { logger } from "@/lib/logger";
@@ -37,7 +36,7 @@ export async function GET(request: Request) {
   }
 
   const report = await drainOutbox(25);
-  await pruneRateLimits(db());
+  await pruneRateLimits();
 
   if (report.deadLettered > 0) {
     logger.error("cron.dead_letters", { count: report.deadLettered });

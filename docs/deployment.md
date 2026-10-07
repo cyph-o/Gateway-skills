@@ -2,6 +2,25 @@
 
 Three services: **Neon** (Postgres), **Resend** (email), **Vercel** (hosting + cron).
 
+## 0. Lead storage — pick a driver first
+
+`LEAD_STORAGE` selects where enquiries are written:
+
+| Value | Use |
+| --- | --- |
+| `json` (default) | Local development, or one long-lived server with a persistent disk. |
+| `postgres` | **Production on Vercel.** Requires `DATABASE_URL`. |
+
+> **Set `LEAD_STORAGE="postgres"` before taking enquiries on Vercel.** Serverless
+> filesystems are ephemeral and not shared between invocations, so leads written
+> by the JSON driver are lost — silently, and exactly the data the site exists to
+> collect. `/api/health` reports the active driver and returns a `critical`
+> durability severity when it detects the JSON driver on a serverless host.
+
+Both drivers implement the same contract (`src/lib/storage/types.ts`) and the
+same guarantees: the lead, its consent pair and its outbox entry are written
+together, and a repeated submission id yields one lead and one notification.
+
 ## 1. Database — Neon
 
 1. Create a project; copy the **pooled** connection string.
@@ -26,7 +45,27 @@ them without breaking the running version.
    `email.sent`, `email.delivered`, `email.bounced`, `email.complained`,
    `email.failed`. Copy the signing secret → `RESEND_WEBHOOK_SECRET`.
 
-## 3. Hosting — Vercel
+## 3. Admin dashboard — /admin
+
+The dashboard lists captured enquiries and opens each one by reference. It is
+closed unless both variables are set; with either missing the sign-in page says
+it is unconfigured rather than admitting anyone.
+
+1. Generate a password hash — the password itself is never stored:
+   ```
+   node apps/web/scripts/hash-password.mjs
+   ```
+   Paste the output into `ADMIN_PASSWORD_HASH` (minimum 12 characters enforced).
+2. `openssl rand -hex 32` → `ADMIN_SESSION_SECRET`. Rotating it signs every
+   existing session out, which is how access is revoked.
+3. `/admin` is `noindex`, excluded in `robots.txt`, and guarded both in
+   `src/proxy.ts` and again server-side in each page.
+
+Sign-in is rate limited on `ADMIN_RATE_LIMIT_PER_IP` / `ADMIN_RATE_LIMIT_GLOBAL`,
+which are deliberately separate counters from the public form's — a burst of
+enquiries, or someone flooding the form, must never lock the team out of /admin.
+
+## 4. Hosting — Vercel
 
 - Root directory: `apps/web`. Build and install commands are detected.
 - `vercel.json` registers the cron: `/api/cron/drain-outbox` every 5 minutes.
@@ -42,9 +81,10 @@ defaults to the same port; override with `E2E_BASE_URL` to test a deployed URL.
 
 ## Environment variables
 
-See `.env.example`. Required in production: `DATABASE_URL`,
-`NEXT_PUBLIC_SITE_URL`, `RESEND_API_KEY`, `LEAD_NOTIFICATION_FROM`,
-`LEAD_NOTIFICATION_TO`, `RESEND_WEBHOOK_SECRET`, `CRON_SECRET`.
+See `.env.example`. Required in production: `LEAD_STORAGE="postgres"`,
+`DATABASE_URL`, `NEXT_PUBLIC_SITE_URL`, `RESEND_API_KEY`,
+`LEAD_NOTIFICATION_FROM`, `LEAD_NOTIFICATION_TO`, `RESEND_WEBHOOK_SECRET`,
+`CRON_SECRET`, `ADMIN_PASSWORD_HASH`, `ADMIN_SESSION_SECRET`.
 
 ## Degraded behaviour, by design
 
@@ -54,6 +94,8 @@ See `.env.example`. Required in production: `DATABASE_URL`,
 | Resend is down | Same: bounded retries with jittered backoff, then dead-letter + an error log. |
 | `CRON_SECRET` | The drain route returns 503 and logs `cron.misconfigured`. **Set this** — without it the retry guarantee is inert. |
 | `RESEND_WEBHOOK_SECRET` | The webhook returns 503. Delivery still works; only provider-side status reconciliation is lost. |
+| `LEAD_STORAGE=json` on Vercel | **Enquiries are lost.** `/api/health` returns a `critical` severity and the server logs it on boot. This is a misconfiguration, not a degraded mode. |
+| `ADMIN_PASSWORD_HASH` / `ADMIN_SESSION_SECRET` | `/admin` cannot be opened by anyone; the sign-in page reports it is unconfigured. Lead capture is unaffected. |
 | Database down | The visitor sees a retryable error and is given the email address. No false confirmation is ever shown. |
 
 ## Flushing a backlog manually
