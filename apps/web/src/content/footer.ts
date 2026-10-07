@@ -13,7 +13,8 @@ export const corporateStatement =
 export const footerContact = {
   heading: "Speak to a senior adviser",
   body:
-    "Assess your levy eligibility and book an introductory audit and funding check.",
+    "Assess your CQC Service Transformation and Training Needs and book your free " +
+    "introductory audit and funding check today.",
   email: brand.email,
   webLabel: brand.webLabel,
 } as const;

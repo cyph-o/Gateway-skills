@@ -64,11 +64,14 @@ export const programmeCards: readonly ProgrammeCard[] = [
     ],
   },
   {
-    title: "Level 4 AI Automation Practitioner Programme",
+    title: "Care AI & Automation Practitioner Programme",
     body:
-      "A Level 4 programme that teaches coordinators and administrators how to automate " +
-      "repetitive tasks, freeing 5 to 10 hours per week and reducing admin bottlenecks " +
-      "across care logs, rota scheduling and compliance tracking.",
+      "A Level 4 AI toolkit and automation programme that equips and teaches your " +
+      "Managers, Coordinators, Administrators and Senior Care staff how to automate " +
+      "repetitive tasks and digitise records and procedures. It frees up 5 to 10 hours a " +
+      "week of admin bottlenecks across care logs, rotas, scheduling, compliance and " +
+      "mandatory tasks, and equips your business to help meet new Digital and CQC service " +
+      "regulations coming into effect very soon.",
     icon: "cpu",
     href: "/programmes/ai-automation",
   },
