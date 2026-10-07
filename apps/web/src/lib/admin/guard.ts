@@ -11,9 +11,13 @@ import { ADMIN_COOKIE, verifySessionToken } from "./session";
  * details.
  */
 export async function requireAdmin(): Promise<void> {
+  if (!(await hasAdminSession())) redirect("/admin/login");
+}
+
+/** The same check without the redirect, for chrome that should only appear to
+ *  someone already signed in. */
+export async function hasAdminSession(): Promise<boolean> {
   const secret = process.env.ADMIN_SESSION_SECRET;
   const token = (await cookies()).get(ADMIN_COOKIE)?.value;
-  if (!secret || !(await verifySessionToken(token, secret))) {
-    redirect("/admin/login");
-  }
+  return Boolean(secret) && (await verifySessionToken(token, secret!));
 }

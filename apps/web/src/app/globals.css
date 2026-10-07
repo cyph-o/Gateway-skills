@@ -183,3 +183,19 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Admin area chrome.
+
+   /admin is a staff tool and must not carry the marketing header, nav and
+   "Talk to Gateway" CTA. It is nested under the root layout, so it cannot drop
+   that chrome by composition. Reading the path in the root layout would work
+   but would opt the whole marketing site out of static rendering, which is far
+   too high a price for hiding a header — so the admin layout flags itself and
+   the chrome is hidden from above with :has(). Where :has() is unsupported the
+   header simply shows, which is untidy rather than broken.
+   -------------------------------------------------------------------------- */
+body:has([data-admin-area]) > header,
+body:has([data-admin-area]) > footer {
+  display: none;
+}

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { signOut } from "@/actions/admin-auth";
 import { Button } from "@/components/primitives/Button";
 import { Container } from "@/components/layout/Container";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
@@ -39,11 +38,6 @@ export default async function AdminDashboard({
             {total} {total === 1 ? "enquiry" : "enquiries"} · storage: {store.driver}
           </p>
         </div>
-        <form action={signOut}>
-          <Button type="submit" variant="outline">
-            Sign out
-          </Button>
-        </form>
       </div>
 
       {durability.severity === "critical" ? (
