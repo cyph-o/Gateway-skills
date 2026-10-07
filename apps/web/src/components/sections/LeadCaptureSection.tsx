@@ -2,6 +2,7 @@ import { Container } from "@/components/layout/Container";
 import { LeadForm } from "@/components/forms/LeadForm";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { Icon } from "@/components/primitives/Icon";
+import { siteUrl } from "@/content/brand";
 import type { Attribution } from "@/lib/attribution";
 import type { CampaignId } from "@/lib/leads/campaigns";
 
@@ -60,7 +61,12 @@ export function LeadCaptureSection({
           {/* A light island inside a forest section: data-surface resets the
               inherited dark-surface text colours for everything within. */}
           <div data-surface="light" className="rounded-sm bg-surface p-6 md:p-8">
-            <LeadForm campaign={campaign} submitLabel={submitLabel} attribution={attribution} />
+            <LeadForm
+              campaign={campaign}
+              submitLabel={submitLabel}
+              attribution={attribution}
+              confirmationUrl={`${siteUrl()}/enquiry-received`}
+            />
           </div>
         </div>
       </Container>

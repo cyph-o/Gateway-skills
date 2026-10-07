@@ -1,176 +1,160 @@
-import { expect, test } from "@playwright/test";
-import {
-  closeDb,
-  consentsForLead,
-  deleteLeadsByEmail,
-  leadsByEmail,
-  outboxForLead,
-  resetRateLimits,
-} from "./helpers/store";
-import { MIN_FILL_MS } from "../src/lib/leads/schema";
+import { expect, test, type Page, type Request } from "@playwright/test";
 
-/** Unique per run so parallel projects never collide on the same row. */
-function uniqueEmail(tag: string): string {
-  return `e2e.${tag}.${Date.now()}.${Math.random().toString(36).slice(2, 8)}@example.co.uk`;
+/**
+ * Enquiries go to the Gateway inbox through Web3Forms. Every spec here stubs
+ * the Web3Forms endpoint, so the suite never sends a real email; the stub
+ * records what the form posted so the email's contents can be asserted.
+ */
+const WEB3FORMS = "https://api.web3forms.com/submit";
+
+async function stubWeb3Forms(
+  page: Page,
+  reply: { status?: number; body?: unknown; delayMs?: number } = {},
+): Promise<Request[]> {
+  const requests: Request[] = [];
+  await page.route(WEB3FORMS, async (route) => {
+    requests.push(route.request());
+    if (reply.delayMs) await new Promise((r) => setTimeout(r, reply.delayMs));
+    await route.fulfill({
+      status: reply.status ?? 200,
+      contentType: "application/json",
+      headers: { "access-control-allow-origin": "*" },
+      body: JSON.stringify(
+        reply.body ?? { success: true, message: "Email sent successfully!" },
+      ),
+    });
+  });
+  return requests;
 }
 
-const FILLED = {
-  fullName: "Alex Morgan",
-  companyName: "Example Care Group Ltd",
-  mobileNumber: "07700 900123",
-};
+/** Decodes the multipart body the form posted into label → value(s). */
+function postedFields(request: Request): Record<string, string> {
+  const body = request.postData() ?? "";
+  const out: Record<string, string> = {};
+  for (const part of body.split(/------\S+/)) {
+    const match = part.match(/name="([^"]+)"\r\n\r\n([\s\S]*?)\r\n$/);
+    if (match) out[match[1]!] = match[2]!;
+  }
+  return out;
+}
 
-test.describe.configure({ mode: "serial" });
-/**
- * A distinct client IP for this spec. The rate limiter keys on
- * x-forwarded-for, so without this the submission specs share one bucket and
- * trip the per-IP limit when they run in parallel — a test-environment
- * collision, not a product fault. Giving each spec its own address isolates
- * them and exercises the per-IP keying for real.
- */
-test.use({ extraHTTPHeaders: { "x-forwarded-for": "203.0.113.11" } });
-
-test.beforeEach(async () => {
-  await resetRateLimits();
-});
-
-test.afterAll(async () => {
-  await closeDb();
-});
-
-async function fillForm(page: import("@playwright/test").Page, email: string) {
-  await page.fill("#fullName", FILLED.fullName);
-  await page.fill("#jobTitle", "Registered Manager");
-  await page.fill("#companyName", FILLED.companyName);
-  await page.fill("#mobileNumber", FILLED.mobileNumber);
+async function fillForm(page: Page, email = "sarah@abc-care.co.uk") {
+  await page.fill("#fullName", "Sarah Johnson");
+  await page.fill("#jobTitle", "Registered Home Manager");
+  await page.fill("#companyName", "ABC Care Home");
+  await page.fill("#mobileNumber", "07123 456789");
   await page.fill("#email", email);
   await page.selectOption("#employeeBand", "50-249");
   await page.selectOption("#levyPayer", "no");
-  // The server rejects submissions faster than a human could type.
-  await page.waitForTimeout(MIN_FILL_MS + 300);
 }
 
-test("submits an enquiry, persists it transactionally and confirms with a reference", async ({
+const submit = (page: Page) => page.locator('form button[type="submit"]');
+
+test("sends a labelled enquiry to Web3Forms, confirms in place and resets", async ({
   page,
 }) => {
-  const email = uniqueEmail("happy");
-  await page.goto("/care-show/leadership?utm_source=care_show&utm_medium=qr&utm_campaign=q4_2026");
-  await fillForm(page, email);
-  await page.locator('form button[type="submit"]').click();
+  const requests = await stubWeb3Forms(page, { delayMs: 600 });
+  await page.goto("/care-show/leadership?utm_source=care_show&utm_medium=qr");
+  await fillForm(page);
+  await page.check("#interest-ai_automation");
+  await page.check("#interest-dual_pathway");
+  await page.check("#marketingConsent");
 
-  await expect(page).toHaveURL(/\/enquiry-received\?ref=GSN-/);
-  await expect(page.getByText(/GSN-/)).toBeVisible();
+  await submit(page).click();
 
-  const rows = await leadsByEmail(email);
-  expect(rows).toHaveLength(1);
-  const lead = rows[0]!;
+  // In flight: a loading label, and disabled so a second tap cannot resend.
+  await expect(submit(page)).toHaveText(/Submitting/);
+  await expect(submit(page)).toBeDisabled();
 
-  expect(lead.fullName).toBe(FILLED.fullName);
-  expect(lead.companyName).toBe(FILLED.companyName);
-  // Normalised to E.164 regardless of how it was typed.
-  expect(lead.mobileNumber).toBe("+447700900123");
-  expect(lead.campaign).toBe("care_show_leadership");
-  expect(lead.reference).toMatch(/^GSN-[2-9A-HJ-NP-TV-Z]{6}$/);
-  // QR attribution captured and stored with the lead, not left to a cookie.
-  expect(lead.attribution).toMatchObject({
-    utm_source: "care_show",
-    utm_medium: "qr",
-    utm_campaign: "q4_2026",
+  await expect(page.locator("form").getByRole("status")).toContainText(
+    "Your enquiry has been submitted successfully",
+  );
+  await expect(page).toHaveURL(/\/care-show\/leadership/);
+  expect(requests).toHaveLength(1);
+
+  const fields = postedFields(requests[0]!);
+  expect(fields).toMatchObject({
+    access_key: "c9b68c8c-d111-4a14-92df-bc0cfe78ff86",
+    subject: "New Enquiry from Sarah Johnson - Gateway Skills Network",
+    replyto: "sarah@abc-care.co.uk",
+    Name: "Sarah Johnson",
+    "Job Title": "Registered Home Manager",
+    Company: "ABC Care Home",
+    Mobile: "+447123456789",
+    "Work Email": "sarah@abc-care.co.uk",
+    "Number of UK Employees": "50 to 249",
+    "Apprenticeship Levy": "No",
+    "Programme Interest":
+      "Level 4 AI Automation Track\r\nLevel 6 & Level 7 Combined Pathway",
+    "Campaign Tracking": "utm_source: care_show\r\nutm_medium: qr",
   });
+  expect(fields["Marketing Consent"]).toMatch(/^Yes/);
 
-  // The outbox row committed in the same transaction as the lead.
-  const outbox = await outboxForLead(lead.id);
-  expect(outbox).toHaveLength(1);
-  expect(outbox[0]!.type).toBe("lead_notification");
-
-  // Consent recorded per purpose; marketing left unticked means not granted.
-  const consents = await consentsForLead(lead.id);
-  expect(consents).toHaveLength(2);
-  expect(consents.find((c) => c.purpose === "enquiry_response")?.granted).toBe(true);
-  expect(consents.find((c) => c.purpose === "marketing")?.granted).toBe(false);
-
-  await deleteLeadsByEmail(email);
+  // Reset for the next visitor at the stand, with the button back to normal.
+  await expect(page.locator("#fullName")).toHaveValue("");
+  await expect(page.locator("#interest-ai_automation")).not.toBeChecked();
+  await expect(submit(page)).toBeEnabled();
 });
 
-test("the same enquiry submitted twice yields one lead and one notification", async ({
+test("blocks an empty form with inline errors and sends nothing", async ({
   page,
 }) => {
-  const email = uniqueEmail("idem");
-
-  // Two independent visits with identical details — the realistic duplicate:
-  // a visitor who is unsure the first submission worked and does it again.
-  for (const attempt of [1, 2]) {
-    await page.goto("/care-show/ai-automation");
-    await fillForm(page, email);
-    await page.locator('form button[type="submit"]').click();
-    await expect(page, `attempt ${attempt} should confirm`).toHaveURL(/\/enquiry-received/);
-  }
-
-  const rows = await leadsByEmail(email);
-  expect(rows, "a repeated enquiry must not create a second lead").toHaveLength(1);
-  expect(
-    await outboxForLead(rows[0]!.id),
-    "nor a second notification for Gateway to chase twice",
-  ).toHaveLength(1);
-
-  await deleteLeadsByEmail(email);
-});
-
-test("rejects invalid input with field-level errors and keeps what was typed", async ({ page }) => {
+  const requests = await stubWeb3Forms(page);
   await page.goto("/care-show/leadership");
-  await page.fill("#fullName", "A");
-  await page.fill("#jobTitle", "Operations Director");
-  await page.fill("#companyName", "Example Care Group Ltd");
-  await page.fill("#mobileNumber", "not-a-number");
-  await page.fill("#email", "not-an-email");
-  await page.selectOption("#employeeBand", "1-49");
-  await page.selectOption("#levyPayer", "no");
-  await page.waitForTimeout(MIN_FILL_MS + 300);
-  await page.locator('form button[type="submit"]').click();
+  await submit(page).click();
 
   await expect(page.locator("#fullName-error")).toBeVisible();
-  await expect(page.locator("#mobileNumber-error")).toBeVisible();
   await expect(page.locator("#email-error")).toBeVisible();
-  // Nothing lost on rejection — the organisation name survives the round trip.
-  await expect(page.locator("#companyName")).toHaveValue("Example Care Group Ltd");
-  await expect(page).not.toHaveURL(/enquiry-received/);
+  await expect(page.locator("#employeeBand-error")).toBeVisible();
+  await expect(page.locator("#fullName")).toBeFocused();
+  expect(requests).toHaveLength(0);
 });
 
-test("a bot that fills the honeypot is rejected and nothing is stored", async ({ page }) => {
-  const email = uniqueEmail("bot");
+test("rejects an invalid email and mobile, keeping what was typed", async ({
+  page,
+}) => {
+  const requests = await stubWeb3Forms(page);
   await page.goto("/care-show/leadership");
-  await fillForm(page, email);
+  await fillForm(page, "not-an-email");
+  await page.fill("#mobileNumber", "not-a-number");
+  await submit(page).click();
+
+  await expect(page.locator("#email-error")).toBeVisible();
+  await expect(page.locator("#mobileNumber-error")).toBeVisible();
+  await expect(page.locator("#companyName")).toHaveValue("ABC Care Home");
+  expect(requests).toHaveLength(0);
+});
+
+test("shows a friendly error when Web3Forms fails, and keeps the answers", async ({
+  page,
+}) => {
+  await stubWeb3Forms(page, {
+    status: 500,
+    body: { success: false, message: "Internal" },
+  });
+  await page.goto("/care-show/leadership");
+  await fillForm(page);
+  await submit(page).click();
+
+  await expect(page.locator("form").getByRole("alert")).toHaveText(
+    "Something went wrong while submitting your enquiry. Please try again or contact us directly.",
+  );
+  await expect(page.locator("#fullName")).toHaveValue("Sarah Johnson");
+  await expect(submit(page)).toBeEnabled();
+});
+
+test("a bot that fills the honeypot is shown success but nothing is sent", async ({
+  page,
+}) => {
+  const requests = await stubWeb3Forms(page);
+  await page.goto("/care-show/leadership");
+  await fillForm(page);
   await page.evaluate(() => {
-    const field = document.querySelector<HTMLInputElement>("#company_website");
+    const field = document.querySelector<HTMLInputElement>("#botcheck");
     if (field) field.value = "https://spam.example";
   });
-  await page.locator('form button[type="submit"]').click();
+  await submit(page).click();
 
-  await expect(page.locator('form [role="alert"]')).toContainText(/rejected/i);
-  expect(await leadsByEmail(email)).toHaveLength(0);
-});
-
-test("submitting too quickly is rejected as mechanical", async ({ page }) => {
-  const email = uniqueEmail("fast");
-  await page.goto("/care-show/leadership");
-  await page.fill("#fullName", FILLED.fullName);
-  await page.fill("#jobTitle", "Registered Manager");
-  await page.fill("#companyName", FILLED.companyName);
-  await page.fill("#mobileNumber", FILLED.mobileNumber);
-  await page.fill("#email", email);
-  await page.selectOption("#employeeBand", "50-249");
-  await page.selectOption("#levyPayer", "no");
-
-  // Reset the render stamp immediately before submitting. Filling this form
-  // now takes longer than MIN_FILL_MS on a loaded machine, so relying on the
-  // test itself being fast was flaky. This exercises the server-side timing
-  // guard directly and deterministically.
-  await page.evaluate(() => {
-    const stamp = document.querySelector<HTMLInputElement>('input[name="renderedAt"]');
-    if (stamp) stamp.value = String(Date.now());
-  });
-  await page.locator('form button[type="submit"]').click();
-
-  await expect(page.locator('form [role="alert"]')).toContainText(/rejected/i);
-  expect(await leadsByEmail(email)).toHaveLength(0);
+  await expect(page.locator("form").getByRole("status")).toBeVisible();
+  expect(requests).toHaveLength(0);
 });

@@ -3,8 +3,9 @@ import { CAMPAIGN_IDS } from "./campaigns";
 import { collapseWhitespace, normaliseMobile } from "./normalise";
 
 /** A bot filling every field, including the hidden one, is the cheapest signal
- *  available. Humans never see or fill this. */
-export const HONEYPOT_FIELD = "company_website";
+ *  available. Humans never see or fill this. Named `botcheck` because that is
+ *  the field Web3Forms itself rejects on, which covers no-JavaScript posts. */
+export const HONEYPOT_FIELD = "botcheck";
 
 /** Submissions faster than this are mechanical, not typed by a person. */
 export const MIN_FILL_MS = 2_000;
