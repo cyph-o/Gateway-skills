@@ -52,10 +52,13 @@ export function LogoLockup({
           className={`font-sans font-extrabold tracking-[0.04em] ${primarySize} ${primaryTone}`}
         >
           <span className="sr-only">{brand.wordmarkPrimary}</span>
+          {/* The visible letters are drawn with CSS generated content so they
+              are not page text: copied or scraped text then reads "GATEWAY"
+              once (from the sr-only label above) instead of "GATEWAY GTEWAY". */}
           <span aria-hidden="true">
-            {first}
+            <span data-glyph={first} className="before:content-[attr(data-glyph)]" />
             <GatewayA />
-            {rest.join("")}
+            <span data-glyph={rest.join("")} className="before:content-[attr(data-glyph)]" />
           </span>
         </span>
         <span

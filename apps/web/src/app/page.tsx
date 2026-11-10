@@ -121,7 +121,7 @@ export default function HomePage() {
 
       <ProgrammeSummary
         eyebrow="Operational outcomes"
-        heading="Turning everyday care tasks into smarter workflows"
+        heading="Turning everyday tasks into smarter workflows"
         items={aiPillars}
         href="/programmes/ai-automation"
         linkLabel="Full programme detail"

@@ -29,7 +29,7 @@ export const heroOverlay = {
 
 export const leadershipOverlay = {
   eyebrow: "Strategic leadership",
-  heading: "Develop the leaders your care organisation needs",
+  heading: "Develop the leaders your organisation needs",
   body:
     "A CMI Level 7 Diploma paired with a Level 6 Service Designer qualification, built " +
     "for managers who stay in post while they study.",

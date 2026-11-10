@@ -15,6 +15,10 @@ export const footerContact = {
   body:
     "Assess your CQC Service Transformation and Training Needs and book your free " +
     "introductory audit and funding check today.",
+  /** Homepage only, per the Managing Director's brief; other pages keep `body`. */
+  homeBody:
+    "Discuss your workforce development needs and ask us to check apprenticeship " +
+    "funding options for your organisation.",
   email: brand.email,
   webLabel: brand.webLabel,
 } as const;

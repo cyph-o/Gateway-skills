@@ -6,6 +6,7 @@ import { footerContact } from "@/content/footer";
 import { legalNav, programmeNav } from "@/content/nav";
 import { Container } from "./Container";
 import { CorporateStatement } from "./CorporateStatement";
+import { FooterContactBody } from "./FooterContactBody";
 
 const year = new Date().getFullYear();
 
@@ -19,7 +20,9 @@ export function SiteFooter() {
             <p className="mt-6 max-w-md font-display text-2xl text-on-forest md:text-3xl">
               {footerContact.heading}
             </p>
-            <p className="mt-4 max-w-md leading-relaxed">{footerContact.body}</p>
+            <p className="mt-4 max-w-md leading-relaxed">
+              <FooterContactBody />
+            </p>
             <address className="mt-6 space-y-3 not-italic">
               <a
                 href={`mailto:${brand.email}`}

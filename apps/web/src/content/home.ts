@@ -2,25 +2,24 @@ import type { IconName, Proposition, SectionHeader } from "./types";
 
 export const homeHero = {
   eyebrow: "Gateway Skills Network Ltd · Connecting Business to Future Skills",
-  headline:
-    "Unlock fully funded leadership, automation and workforce development, built " +
-    "exclusively for adult social care.",
+  headline: "AI, Leadership & Workforce Development for Care Providers and Businesses",
   standfirst:
-    "We match care providers with Ofsted-regulated training partners to deliver fully " +
-    "funded leadership, automation and frontline development, improving performance, " +
-    "retention and inspection outcomes.",
+    "Gateway Skills Network specialises in adult social care workforce development and " +
+    "also supports employers across other sectors. We connect organisations with " +
+    "training partners offering AI & Automation, Leadership & Management, Care, IT, " +
+    "Marketing and Customer Service apprenticeship opportunities. Funding options are " +
+    "subject to eligibility.",
 } as const;
 
 export const trustBanner =
-  "Delivering High-Impact Professional Development Tailored Pathways for the Adult " +
-  "Social Care Sector.";
+  "Specialists in Adult Social Care | Supporting Employers Across Other Sectors";
 
 export const capabilityHeader: SectionHeader = {
   eyebrow: "Programmes",
-  heading: "Complete Workforce Development, Fully Funded Routes",
+  heading: "Apprenticeships & Workforce Development — Funding Options Available",
   standfirst:
-    "Each pathway is built for the operational reality of a regulated care service, " +
-    "not a generic classroom.",
+    "Our specialist care pathways remain central to Gateway, alongside AI, leadership " +
+    "and business skills programmes available through our training partners.",
 };
 
 export interface ProgrammeCard {

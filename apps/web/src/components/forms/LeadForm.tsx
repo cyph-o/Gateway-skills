@@ -27,7 +27,7 @@ const FIELDS: readonly FieldSpec[] = [
   { name: "jobTitle", label: "Job title", autoComplete: "organization-title" },
   {
     name: "companyName",
-    label: "Care provider / company name",
+    label: "Business / organisation name",
     autoComplete: "organization",
   },
   {

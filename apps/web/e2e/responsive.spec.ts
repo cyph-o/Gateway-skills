@@ -190,7 +190,7 @@ test("the hero owns the first screen: nothing below it peeks above the fold", as
 
     // The trust banner is the first thing after the hero. If any of it shows
     // on load it competes with the headline for the opening impression.
-    const banner = page.getByText(/^Delivering High-Impact Professional Development/);
+    const banner = page.getByText(/^Specialists in Adult Social Care \| Supporting Employers/);
     await expect(banner, `trust banner must stay below the fold on ${label}`).not.toBeInViewport();
 
     // ...without pushing the call to action off-screen to achieve it.
